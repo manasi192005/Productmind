@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+
+
+<html class="dark" lang="en">
+
+<head>
+  <title>ProductMind | Discover</title>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="common.js"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-fixed": "#000000",
+            "surface-container-highest": "#192540",
+            "secondary-fixed-dim": "#ceb9ff",
+            "on-error": "#490013",
+            "surface-container-low": "#091328",
+            "primary-dim": "#6063ee",
+            "on-tertiary-fixed-variant": "#00377b",
+            "surface-container-high": "#141f38",
+            "on-primary-container": "#0a0081",
+            "tertiary-container": "#4388fd",
+            "outline": "#6d758c",
+            "surface-container": "#0f1930",
+            "on-tertiary-container": "#000311",
+            "on-surface-variant": "#a3aac4",
+            "tertiary-dim": "#699cff",
+            "on-surface": "#dee5ff",
+            "on-secondary-fixed-variant": "#5f28c8",
+            "on-primary-fixed-variant": "#0e009d",
+            "inverse-surface": "#faf8ff",
+            "secondary": "#ac8aff",
+            "primary-fixed-dim": "#8387ff",
+            "surface-dim": "#060e20",
+            "surface-container-lowest": "#000000",
+            "surface-tint": "#a3a6ff",
+            "secondary-fixed": "#dac9ff",
+            "surface": "#060e20",
+            "primary-container": "#9396ff",
+            "on-secondary-fixed": "#40009b",
+            "on-secondary-container": "#d9c8ff",
+            "surface-variant": "#192540",
+            "error": "#ff6e84",
+            "tertiary-fixed-dim": "#73a2ff",
+            "on-tertiary": "#001e4a",
+            "primary": "#a3a6ff",
+            "error-dim": "#d73357",
+            "surface-bright": "#1f2b49",
+            "outline-variant": "#40485d",
+            "on-error-container": "#ffb2b9",
+            "on-primary": "#0f00a4",
+            "on-background": "#dee5ff",
+            "secondary-dim": "#8455ef",
+            "tertiary-fixed": "#8ab0ff",
+            "on-secondary": "#280067",
+            "error-container": "#a70138",
+            "secondary-container": "#5516be",
+            "primary-fixed": "#9396ff",
+            "background": "#060e20",
+            "inverse-on-surface": "#4d556b",
+            "on-tertiary-fixed": "#00163b",
+            "tertiary": "#699cff",
+            "inverse-primary": "#494bd7"
+          },
+          "borderRadius": {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    body {
+      background-color: #060e20;
+      color: #dee5ff;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .glass-panel {
+      backdrop-filter: blur(24px);
+    }
+
+    .bg-gradient-primary {
+      background: linear-gradient(135deg, #a3a6ff 0%, #ac8aff 100%);
+    }
+
+    .glow-primary {
+      box-shadow: 0 0 48px rgba(96, 99, 238, 0.15);
+    }
+
+    .nav-blur {
+      backdrop-filter: blur(20px);
+    }
+  </style>
+</head>
+
+<body class="font-body selection:bg-primary selection:text-on-primary">
+  <!-- Top Navigation Mount -->
+  <div id="topnav-mount"></div>
+  <main class="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto space-y-24">
+    <!-- Hero Section -->
+    <header class="relative text-center space-y-8">
+      <!-- Decorative Background Orbs -->
+      <div
+        class="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/10 blur-[120px] rounded-full -z-10">
+      </div>
+      <div class="space-y-4">
+        <h1 class="font-headline font-extrabold text-5xl md:text-7xl tracking-tighter leading-tight">
+          Find your <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">perfect
+            product</span>
+        </h1>
+        <p class="text-on-surface-variant text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+          Experience the ethereal curator. Ask our intelligence to refine your search, compare complexities, and deliver
+          precision recommendations.
+        </p>
+      </div>
+      <!-- AI Command Bar -->
+      <div class="max-w-3xl mx-auto relative group">
+        <div
+          class="bg-surface-container-highest rounded-xl p-2 flex items-center shadow-2xl focus-within:ring-1 ring-secondary/40 transition-all duration-300">
+          <input id="pm-search-input"
+            class="flex-1 bg-transparent border-none focus:ring-0 px-6 py-4 text-on-surface placeholder:text-on-surface-variant/50 text-lg"
+            placeholder="Describe what you're looking for..." type="text" />
+          <button id="pm-ask-btn"
+            class="bg-gradient-primary text-on-primary-fixed px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all glow-primary">
+            <span class="material-symbols-outlined text-xl"
+              style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+            Ask AI
+          </button>
+        </div>
+        <!-- Ambient shadow glow for input -->
+        <div
+          class="absolute inset-0 bg-secondary/5 blur-xl -z-10 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity">
+        </div>
+      </div>
+      <!-- Suggestion Pills -->
+      <div class="flex flex-wrap justify-center gap-3 mt-8">
+        <button
+          class="pm-pill px-5 py-2 rounded-full bg-secondary-container text-on-secondary-container text-sm font-medium hover:bg-secondary-container/80 transition-colors">Noise-cancelling
+          headphones</button>
+        <button
+          class="pm-pill px-5 py-2 rounded-full bg-secondary-container text-on-secondary-container text-sm font-medium hover:bg-secondary-container/80 transition-colors">4K
+          Mirrorless cameras</button>
+        <button
+          class="pm-pill px-5 py-2 rounded-full bg-secondary-container text-on-secondary-container text-sm font-medium hover:bg-secondary-container/80 transition-colors">Ergonomic
+          office chairs</button>
+        <button
+          class="pm-pill px-5 py-2 rounded-full bg-secondary-container text-on-secondary-container text-sm font-medium hover:bg-secondary-container/80 transition-colors">Mechanical
+          keyboards</button>
+      </div>
+    </header>
+    <!-- Results Section -->
+    <section class="space-y-12">
+      <div class="flex items-end justify-between border-b border-outline-variant/15 pb-6">
+        <div>
+          <h2 class="font-headline text-3xl font-bold tracking-tight">Curated Matches</h2>
+          <p class="text-on-surface-variant font-light mt-1">Based on your preference for "high-fidelity audio and
+            minimalist design"</p>
+        </div>
+        <div class="flex gap-2">
+          <button
+            class="p-2 rounded-full bg-surface-container-high border border-outline-variant/15 hover:bg-surface-container-highest transition-colors">
+            <span class="material-symbols-outlined">filter_list</span>
+          </button>
+        </div>
+      </div>
+      <!-- Asymmetric Bento-style Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Top Pick Card (Large) -->
+        <div
+          class="lg:col-span-2 relative group bg-surface-container-low rounded-lg overflow-hidden flex flex-col md:flex-row shadow-xl">
+          <div class="md:w-1/2 h-80 md:h-full relative overflow-hidden">
+            <img alt="Premium Headphones"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              data-alt="sleek minimalist matte black headphones resting on a dark velvet surface with dramatic rim lighting and soft violet shadows"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWKL-ywH6JGuEIzxOSEpTLTbUNnyyy9Y_baZ7Usz_VLeu6-tinMoCse79lOXuimUlTteaxKli9mX2a4Umoi0QUuvSUW4mU2JbgeKlI9QFILhMQLLJmqghKYhr2vUq_NivDzzbl8m7tKqNk_lz3xAN4eHpFMXs6Q3Ktb3jFBxA4YI2jWczb0ZgRcxq7Igy3hfQ0gGZSuR80tepFXysTwc2NOb37OZXBqpAW3UrYE1KM7DeKDLpjfp-gg1H3trQ5Sn4SXD0lieUnLPo" />
+            <div
+              class="absolute top-4 left-4 bg-primary text-on-primary-fixed px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase">
+              Top Pick</div>
+          </div>
+          <div class="md:w-1/2 p-8 flex flex-col justify-between bg-surface-container-high">
+            <div class="space-y-4">
+              <div class="flex justify-between items-start">
+                <h3 class="text-2xl font-headline font-bold">SonicCore Ultra X1</h3>
+                <span class="text-primary font-bold text-xl">$349</span>
+              </div>
+              <div class="flex gap-2">
+                <span
+                  class="text-xs px-2 py-1 rounded bg-surface-container-highest border border-outline-variant/20 text-on-surface-variant">Active
+                  Noise Cancellation</span>
+                <span
+                  class="text-xs px-2 py-1 rounded bg-surface-container-highest border border-outline-variant/20 text-on-surface-variant">40h
+                  Battery</span>
+              </div>
+              <p class="text-on-surface-variant text-sm leading-relaxed">The pinnacle of acoustic engineering, offering
+                a pure soundstage with industry-leading isolation technology.</p>
+              <!-- AI Insight Box -->
+              <div class="bg-surface-container-low/50 border border-primary/20 rounded-lg p-4 space-y-2">
+                <div class="flex items-center gap-2 text-primary">
+                  <span class="material-symbols-outlined text-sm"
+                    style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                  <span class="text-xs font-bold uppercase tracking-wider">AI Insight</span>
+                </div>
+                <p class="text-xs text-on-surface italic">"This model matches 98% of your criteria. The flat frequency
+                  response is ideal for the jazz and classical genres you frequently explore."</p>
+              </div>
+            </div>
+            <div class="mt-8 flex gap-4">
+              <button
+                class="flex-1 bg-gradient-primary text-on-primary-fixed py-3 rounded-full font-bold transition-transform active:scale-95">View
+                Details</button>
+              <button
+                class="p-3 rounded-full border border-outline-variant/30 hover:bg-surface-container-highest transition-colors">
+                <span class="material-symbols-outlined">bookmark</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Secondary Card 1 -->
+        <div
+          class="bg-surface-container-high rounded-lg overflow-hidden group flex flex-col shadow-lg hover:shadow-primary/5 transition-shadow">
+          <div class="h-48 overflow-hidden relative">
+            <img alt="Modern Headphones"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              data-alt="professional studio headphones on a dark oak desk with warm ambient light and blurred bokeh electronics in background"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDj5EEoqVgx9OwtX3cZg87tAdKdV6Bj0DKoZBKDa7yhDa_vOsuyHW9E-i_qfQRPIUz4cnE05WdN90zyKEFXXQVvYsTQAomsJQugxbU9MOwmfV5HrEvWHHd9wTwgJeHBPBLWSB1iqL-cISd2wooXE9oDyKFkN5Mj3nNLh1M7yOsNM3o2pGYGKrfbNJLJVF16CJZ3ASagUm8BHG3KfdZ8xPPA-I0Opia8W7yqc_fgUYqmyOV-5ZY4vKx0cSmZCeBkk7QTUsKqsJWSOIE" />
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <h3 class="font-headline font-bold">Zenith Flow Wireless</h3>
+                <span class="text-secondary-dim font-bold">$229</span>
+              </div>
+              <p class="text-on-surface-variant text-xs leading-relaxed">Lightweight frame and memory foam cushions
+                designed for all-day studio sessions.</p>
+              <div class="pt-2 flex items-start gap-2">
+                <span class="material-symbols-outlined text-primary-dim text-base">psychology</span>
+                <p class="text-[10px] text-primary-dim/80 font-medium uppercase tracking-tight">Best for long-duration
+                  wear</p>
+              </div>
+            </div>
+            <button
+              class="mt-6 w-full py-2 rounded-full border border-outline-variant/20 hover:bg-surface-container-highest text-sm font-bold transition-colors">Compare</button>
+          </div>
+        </div>
+        <!-- Secondary Card 2 -->
+        <div class="bg-surface-container-high rounded-lg overflow-hidden group flex flex-col shadow-lg">
+          <div class="h-48 overflow-hidden relative">
+            <img alt="Minimalist Headphones"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              data-alt="close up of silver metallic headphones with white leather cups in a brightly lit clean futuristic aesthetic"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkKJ04KoY2y2huwz8ygfR9kfMq-DTjTd5XtQpdHpFuXnaX5gxhwjkQ_GkZ4Hy3Wf0ETjkFuzE8Qohe3zxYGgAOAq38yksBXZ8dt1NXQwTYgedrCKQS3j8r20pNmwM3SDIC7u3oEPgPyhjisJaH7ZFdrZw738FKZzEBXYcGZ70f91G4Y5XDWaOeXtpaFLPOXT1_AJiJ6-hE1HpMdIIELyAsQJIaU5NH8xqtqW4tcej18nmQtMAKwBuniqFLlYCe298ZPqs41h4QPlg" />
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <h3 class="font-headline font-bold">Aura Pure S2</h3>
+                <span class="text-secondary-dim font-bold">$189</span>
+              </div>
+              <p class="text-on-surface-variant text-xs leading-relaxed">Sustainable materials paired with
+                high-efficiency drivers for the eco-conscious audiophile.</p>
+              <div class="pt-2 flex items-start gap-2">
+                <span class="material-symbols-outlined text-primary-dim text-base">psychology</span>
+                <p class="text-[10px] text-primary-dim/80 font-medium uppercase tracking-tight">Highest value for price
+                </p>
+              </div>
+            </div>
+            <button
+              class="mt-6 w-full py-2 rounded-full border border-outline-variant/20 hover:bg-surface-container-highest text-sm font-bold transition-colors">Compare</button>
+          </div>
+        </div>
+        <!-- Secondary Card 3 -->
+        <div class="bg-surface-container-high rounded-lg overflow-hidden group flex flex-col shadow-lg">
+          <div class="h-48 overflow-hidden relative">
+            <img alt="Classic Headphones"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              data-alt="retro style wooden and leather headphones on a marble stand with soft golden hour light"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFhmZcKni2jyUaLRDejeZCKaS19-crvhfUsxvZpL-dSR8FKLblNbeDvb0NOZh_HCu0q0q0Sp6t1m-jxGFiA5duyJlv1F7I3N68GHTz6iXTW40sGtuc0jCsJNf6HKj6fPhvgiZth744KSusdf9FJWZ6IU157HuiufX-ZfX4m8wO7rdCcMyMEXaNj9z1BggWooza96DWMFpcDRdcZrFPYQHcJtoG0xLmPjHIp6bM5XEqkqLxDumn2Dzyb20TsxVGfExxLibt6Y05RtQ" />
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <h3 class="font-headline font-bold">Heritage H-Vibe</h3>
+                <span class="text-secondary-dim font-bold">$410</span>
+              </div>
+              <p class="text-on-surface-variant text-xs leading-relaxed">Handcrafted walnut housing providing a warm,
+                analog-like sound signature.</p>
+              <div class="pt-2 flex items-start gap-2">
+                <span class="material-symbols-outlined text-primary-dim text-base">psychology</span>
+                <p class="text-[10px] text-primary-dim/80 font-medium uppercase tracking-tight">Premium materials choice
+                </p>
+              </div>
+            </div>
+            <button
+              class="mt-6 w-full py-2 rounded-full border border-outline-variant/20 hover:bg-surface-container-highest text-sm font-bold transition-colors">Compare</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Refinement Section -->
+    <section
+      class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-surface-container-low rounded-lg p-12 overflow-hidden relative">
+      <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-secondary/5 blur-[80px] rounded-full -z-10"></div>
+      <div class="space-y-6">
+        <h2 class="font-headline text-4xl font-extrabold tracking-tight">Refine with Context</h2>
+        <p class="text-on-surface-variant leading-relaxed">Our curator understands nuance. Tell us about your
+          environment or use-case to narrow down the selection further.</p>
+        <div class="space-y-4">
+          <div
+            class="flex items-center gap-4 bg-surface-container-high p-4 rounded-xl border border-outline-variant/10 hover:border-primary/30 transition-all cursor-pointer group">
+            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined">train</span>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-bold">Commuting &amp; Travel</h4>
+              <p class="text-xs text-on-surface-variant">Prioritize active noise cancellation and portability.</p>
+            </div>
+            <span
+              class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+          </div>
+          <div
+            class="flex items-center gap-4 bg-surface-container-high p-4 rounded-xl border border-outline-variant/10 hover:border-primary/30 transition-all cursor-pointer group">
+            <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
+              <span class="material-symbols-outlined">laptop_mac</span>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-bold">Deep Work &amp; Focus</h4>
+              <p class="text-xs text-on-surface-variant">Focus on comfort and long-term wearing fatigue.</p>
+            </div>
+            <span
+              class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+          </div>
+        </div>
+      </div>
+      <div class="relative h-[400px] hidden md:block">
+        <div class="absolute inset-0 bg-gradient-to-tr from-surface-container-low to-transparent z-10"></div>
+        <img alt="Tech setup" class="w-full h-full object-cover rounded-lg"
+          data-alt="clean minimal workstation with curved monitor, mechanical keyboard, and premium headphones glowing in soft blue neon light"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvF5ZM9UpBx73Esc20c2QctXJP009B-grAPU9wJeTKr6WiGMrkgNE3JOB5Z69xHLUI0hmM9CsNENxnzHnFnwgrp_ObaNwV0T4ig5tBd_H6oLp742RJxYxLxGw8uX0KHkoqGADqEVLs9Pmzo3IJ3ovyxelWUFZ5hwCkkNNwA5HWu0YWLb6Bv13H4haK-REMHM94Gf7LNjPC4A4upc-Mw62sTInG9ShCyBYeTfkPhOA50CEXBZDjnJ7C1TruC_3YdQ4cwe3kl5vZ2Mw" />
+      </div>
+    </section>
+  </main>
+  <!-- Bottom Nav Mount (Mobile) -->
+  <div id="bottomnav-mount"></div>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+      renderTopNav('discover');
+      renderBottomNav('discover');
+
+
+      const input = document.getElementById('pm-search-input');
+      const askBtn = document.getElementById('pm-ask-btn');
+
+
+      // Restore last query
+      const last = getLastQuery();
+      if (last) input.value = last;
+
+
+      // ── Suggestion pills: fill input AND trigger API ──
+      document.querySelectorAll('.pm-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          input.value = pill.textContent.trim();
+          input.focus();
+          handleAsk();
+        });
+      });
+
+
+      // ── Ask AI: call /recommend and render results ──
+      async function handleAsk() {
+        const q = input.value.trim();
+        if (!q) return;
+        saveQuery(q);
+
+
+        // Loading state
+        askBtn.innerHTML = '<span class="material-symbols-outlined text-xl" style="font-variation-settings:\'FILL\' 1;animation:spin 1s linear infinite">autorenew</span>&nbsp;Processing...';
+        askBtn.disabled = true;
+        showResultsLoading();
+
+
+        try {
+          const data = await apiRecommend(q);
+          renderResults(data);
+        } catch (err) {
+          showResultsError(err.message);
+        } finally {
+          askBtn.innerHTML = '<span class="material-symbols-outlined text-xl" style="font-variation-settings:\'FILL\' 1;">auto_awesome</span>&nbsp;Ask AI';
+          askBtn.disabled = false;
+        }
+      }
+
+
+      askBtn.addEventListener('click', handleAsk);
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') handleAsk(); });
+
+
+      // ── RESULTS RENDERING ──────────────────────────────────
+
+
+      function getResultsSection() {
+        let sec = document.getElementById('pm-results-section');
+        if (!sec) {
+          sec = document.createElement('section');
+          sec.id = 'pm-results-section';
+          sec.className = 'space-y-10 animate-fade-in';
+          // Insert after the hero section
+          const main = document.querySelector('main');
+          const hero = main.querySelector('header');
+          hero.insertAdjacentElement('afterend', sec);
+        }
+        return sec;
+      }
+
+
+      function showResultsLoading() {
+        const sec = getResultsSection();
+        sec.innerHTML = `
+      <div class="flex flex-col items-center justify-center py-16 gap-4 text-on-surface-variant">
+        <div class="w-12 h-12 rounded-full border-4 border-primary/30 border-t-primary animate-spin"></div>
+        <p class="font-label text-sm uppercase tracking-widest">Consulting the intelligence...</p>
+      </div>`;
+      }
+
+
+      function showResultsError(msg) {
+        const sec = getResultsSection();
+        sec.innerHTML = `
+      <div class="flex items-center gap-3 bg-error-container/20 border border-error/20 p-5 rounded-xl">
+        <span class="material-symbols-outlined text-error">error</span>
+        <div>
+          <p class="font-bold text-error text-sm">Recommendation Failed</p>
+          <p class="text-on-surface-variant text-xs mt-1">${msg}</p>
+        </div>
+      </div>`;
+      }
+
+
+      function renderResults(data) {
+        const sec = getResultsSection();
+        const top = data.top_pick;
+        const alts = data.alternatives || [];
+        const prefs = data.extracted_preferences || {};
+        const plan = data.agent_plan || [];
+
+        localStorage.setItem("comparisonProducts", JSON.stringify([
+          data.top_pick,
+          ...(data.alternatives ? data.alternatives.slice(0, 2) : [])
+        ]));
+        localStorage.setItem("comparisonMeta", JSON.stringify(data.comparison_data || data.comparison || {}));
+
+
+        // Build alternative cards
+        const altCards = alts.map(p => `
+      <div class="bg-surface-container-high rounded-xl overflow-hidden flex flex-col shadow-lg group hover:shadow-primary/10 transition-shadow">
+        <div class="p-6 flex-1 flex flex-col gap-3">
+          <div class="flex justify-between items-start">
+            <h4 class="font-headline font-bold text-on-surface">${p.name}</h4>
+            <span class="text-secondary font-bold text-lg">₹${p.price.toLocaleString('en-IN')}</span>
+          </div>
+          <span class="text-[10px] uppercase tracking-widest text-primary/60 bg-primary/10 px-2 py-0.5 rounded-full w-fit">${p.category}</span>
+          <p class="text-on-surface-variant text-xs leading-relaxed">${p.features.slice(0, 3).join(' · ')}</p>
+          <div class="flex flex-wrap gap-1 mt-1">
+            ${p.tags.slice(0, 3).map(t => `<span class="text-[10px] px-2 py-0.5 bg-surface-container-highest text-outline rounded-full">${t}</span>`).join('')}
+          </div>
+        </div>
+      </div>`).join('');
+
+
+        // Extracted preference chips
+        const prefChips = [
+          prefs.category && `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">📂 ${prefs.category}</span>`,
+          prefs.max_price && `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">💸 Under ₹${Number(prefs.max_price).toLocaleString('en-IN')}</span>`,
+          prefs.use_case && `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">🎯 ${prefs.use_case}</span>`,
+          ...(prefs.keywords || []).slice(0, 3).map(k => `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">🔍 ${k}</span>`),
+        ].filter(Boolean).join('');
+
+
+        // Agent plan steps
+        const planSteps = plan.map((step, i) => `
+      <div class="flex items-start gap-3">
+        <div class="w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">${i + 1}</div>
+        <p class="text-on-surface-variant text-sm">${step}</p>
+      </div>`).join('');
+
+
+        sec.innerHTML = `
+      <!-- Section Header -->
+      <div class="flex items-end justify-between border-b border-outline-variant/15 pb-6">
+        <div>
+          <h2 class="font-headline text-3xl font-bold tracking-tight">AI Recommendations</h2>
+          <p class="text-on-surface-variant font-light mt-1">Based on your query: "<span class="text-primary">${input.value}</span>"</p>
+        </div>
+      </div>
+
+
+      <!-- Extracted Preferences -->
+      ${prefChips ? `
+      <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/10">
+        <p class="text-xs font-label text-on-surface-variant uppercase tracking-widest mb-3">What the AI understood</p>
+        <div class="flex flex-wrap gap-2">${prefChips}</div>
+      </div>` : ''}
+
+
+      <!-- TOP PICK -->
+      <div class="relative group bg-surface-container-low rounded-xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-primary/10">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none"></div>
+        <!-- Badge -->
+        <div class="absolute top-4 left-4 z-10 bg-primary text-on-primary-fixed px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase">⭐ Top Pick</div>
+        <!-- Info -->
+        <div class="relative z-10 p-8 flex-1 flex flex-col gap-5">
+          <div class="flex justify-between items-start flex-wrap gap-3 mt-6">
+            <div>
+              <h3 class="text-2xl font-headline font-bold text-on-surface">${top.name}</h3>
+              <span class="text-xs text-primary/70 uppercase tracking-widest">${top.brand} · ${top.category}</span>
+            </div>
+            <span class="text-3xl font-headline font-bold text-primary">₹${top.price.toLocaleString('en-IN')}</span>
+          </div>
+          <!-- Features -->
+          <div class="flex flex-wrap gap-2">
+            ${top.features.map(f => `<span class="text-xs px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-on-surface-variant">${f}</span>`).join('')}
+          </div>
+          <!-- AI Explanation -->
+          <div class="bg-surface-container/60 border border-primary/20 rounded-xl p-5 space-y-2">
+            <div class="flex items-center gap-2 text-primary">
+              <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">auto_awesome</span>
+              <span class="text-xs font-bold uppercase tracking-wider">AI Reasoning</span>
+            </div>
+            <p class="text-sm text-on-surface leading-relaxed italic" id="pm-ai-explanation"></p>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ALTERNATIVES -->
+      ${alts.length ? `
+      <div>
+        <h3 class="font-headline text-xl font-bold tracking-tight mb-5">Alternatives</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${altCards}</div>
+      </div>` : ''}
+
+
+      <!-- AGENT PLAN -->
+      ${plan.length ? `
+      <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/10">
+        <div class="flex items-center gap-2 text-secondary mb-5">
+          <span class="material-symbols-outlined text-sm">psychology</span>
+          <span class="text-xs font-bold uppercase tracking-wider">Agent Plan — How the AI reasoned</span>
+        </div>
+        <div class="space-y-3">${planSteps}</div>
+      </div>` : ''}
+    `;
+
+        // Typing effect for explanation
+        const explElement = document.getElementById('pm-ai-explanation');
+        if (explElement && data.explanation) {
+          const text = data.explanation;
+          const words = text.split(' ');
+          let i = 0;
+          explElement.innerHTML = '"';
+          const timer = setInterval(() => {
+            if (i < words.length) {
+              explElement.innerHTML += words[i] + ' ';
+              i++;
+            } else {
+              explElement.innerHTML = explElement.innerHTML.trim() + '"';
+              clearInterval(timer);
+            }
+          }, 40); // 40ms per word for natural typing feel
+        }
+      }
+
+
+      // Spin animation for loading button
+      const spinStyle = document.createElement('style');
+      spinStyle.textContent = `@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`;
+      document.head.appendChild(spinStyle);
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,852 @@
+[
+  {
+    "id": "P001",
+    "name": "ErgoDesk Pro",
+    "category": "furniture",
+    "price": 4500,
+    "brand": "OfficeZen",
+    "features": [
+      "height adjustable",
+      "spacious 120cm top",
+      "cable management",
+      "sturdy steel frame"
+    ],
+    "tags": [
+      "study table",
+      "desk",
+      "work from home",
+      "office",
+      "ergonomic",
+      "student"
+    ]
+  },
+  {
+    "id": "P002",
+    "name": "StudyMate Classic",
+    "category": "furniture",
+    "price": 2999,
+    "brand": "WoodCraft",
+    "features": [
+      "solid wood",
+      "drawer storage",
+      "bookshelf",
+      "compact design"
+    ],
+    "tags": [
+      "study table",
+      "student desk",
+      "wooden desk",
+      "budget",
+      "storage"
+    ]
+  },
+  {
+    "id": "P003",
+    "name": "FoldEasy Desk",
+    "category": "furniture",
+    "price": 1499,
+    "brand": "SpaceSaver",
+    "features": [
+      "foldable",
+      "lightweight",
+      "wall-mounted option",
+      "easy setup"
+    ],
+    "tags": [
+      "study table",
+      "foldable desk",
+      "small room",
+      "budget",
+      "portable"
+    ]
+  },
+  {
+    "id": "P004",
+    "name": "SonicCore Ultra X1",
+    "category": "audio",
+    "price": 8999,
+    "brand": "SonicCore",
+    "features": [
+      "active noise cancellation",
+      "40h battery",
+      "Hi-Res Audio",
+      "USB-C charging"
+    ],
+    "tags": [
+      "headphones",
+      "noise cancelling",
+      "wireless",
+      "premium",
+      "audio",
+      "ANC"
+    ]
+  },
+  {
+    "id": "P005",
+    "name": "Zenith Flow Wireless",
+    "category": "audio",
+    "price": 5999,
+    "brand": "Zenith",
+    "features": [
+      "lightweight 250g",
+      "30h battery",
+      "fast charge",
+      "foldable"
+    ],
+    "tags": [
+      "headphones",
+      "wireless",
+      "lightweight",
+      "music",
+      "travel"
+    ]
+  },
+  {
+    "id": "P006",
+    "name": "BudgetBeats X2",
+    "category": "audio",
+    "price": 1999,
+    "brand": "BudgetBeats",
+    "features": [
+      "wired",
+      "40mm drivers",
+      "over-ear",
+      "microphone"
+    ],
+    "tags": [
+      "headphones",
+      "wired",
+      "budget",
+      "student",
+      "gaming"
+    ]
+  },
+  {
+    "id": "P007",
+    "name": "VisionPro 4K Monitor",
+    "category": "electronics",
+    "price": 24999,
+    "brand": "VisionTech",
+    "features": [
+      "4K UHD",
+      "27 inch",
+      "144Hz",
+      "HDR400",
+      "USB-C hub"
+    ],
+    "tags": [
+      "monitor",
+      "4K",
+      "gaming",
+      "work from home",
+      "display",
+      "high refresh rate"
+    ]
+  },
+  {
+    "id": "P008",
+    "name": "ClearView 24 FHD",
+    "category": "electronics",
+    "price": 12999,
+    "brand": "ClearView",
+    "features": [
+      "1080p FHD",
+      "24 inch",
+      "IPS panel",
+      "75Hz",
+      "HDMI+VGA"
+    ],
+    "tags": [
+      "monitor",
+      "FHD",
+      "budget",
+      "office",
+      "student",
+      "display"
+    ]
+  },
+  {
+    "id": "P009",
+    "name": "MechType Pro",
+    "category": "peripherals",
+    "price": 4999,
+    "brand": "TypeMaster",
+    "features": [
+      "mechanical switches",
+      "RGB backlight",
+      "TKL layout",
+      "USB passthrough",
+      "clicky keys"
+    ],
+    "tags": [
+      "keyboard",
+      "mechanical keyboard",
+      "gaming",
+      "typing",
+      "RGB",
+      "productivity"
+    ]
+  },
+  {
+    "id": "P010",
+    "name": "QuietType Office",
+    "category": "peripherals",
+    "price": 2499,
+    "brand": "OfficeType",
+    "features": [
+      "membrane keys",
+      "silent typing",
+      "wireless 2.4GHz",
+      "slim design"
+    ],
+    "tags": [
+      "keyboard",
+      "wireless keyboard",
+      "office",
+      "silent",
+      "slim",
+      "work"
+    ]
+  },
+  {
+    "id": "P011",
+    "name": "ErgoChair X3",
+    "category": "furniture",
+    "price": 12999,
+    "brand": "ErgoComfort",
+    "features": [
+      "lumbar support",
+      "adjustable armrests",
+      "mesh back",
+      "360 swivel",
+      "height adjustable"
+    ],
+    "tags": [
+      "chair",
+      "office chair",
+      "ergonomic chair",
+      "work from home",
+      "back support",
+      "comfort"
+    ]
+  },
+  {
+    "id": "P012",
+    "name": "FlexiSeat Budget",
+    "category": "furniture",
+    "price": 4999,
+    "brand": "FlexiSeat",
+    "features": [
+      "foam cushion",
+      "height adjustable",
+      "armrests",
+      "basic lumbar"
+    ],
+    "tags": [
+      "chair",
+      "budget chair",
+      "student chair",
+      "office chair",
+      "affordable"
+    ]
+  },
+  {
+    "id": "P013",
+    "name": "PowerBook Slim 15",
+    "category": "electronics",
+    "price": 54999,
+    "brand": "PowerTech",
+    "features": [
+      "Core i5 12th Gen",
+      "8GB RAM",
+      "512GB SSD",
+      "15.6 inch FHD",
+      "Windows 11"
+    ],
+    "tags": [
+      "laptop",
+      "student laptop",
+      "work laptop",
+      "slim",
+      "Windows"
+    ]
+  },
+  {
+    "id": "P014",
+    "name": "BudgetBook Air",
+    "category": "electronics",
+    "price": 29999,
+    "brand": "BudgetTech",
+    "features": [
+      "Celeron N5100",
+      "8GB RAM",
+      "256GB SSD",
+      "14 inch",
+      "lightweight"
+    ],
+    "tags": [
+      "laptop",
+      "budget laptop",
+      "student",
+      "basic",
+      "lightweight",
+      "affordable"
+    ]
+  },
+  {
+    "id": "P015",
+    "name": "CoolMist USB Fan",
+    "category": "appliances",
+    "price": 799,
+    "brand": "CoolAir",
+    "features": [
+      "USB powered",
+      "3 speeds",
+      "360 rotation",
+      "quiet motor"
+    ],
+    "tags": [
+      "fan",
+      "desk fan",
+      "USB fan",
+      "summer",
+      "budget",
+      "cooling",
+      "small"
+    ]
+  },
+  {
+    "id": "P016",
+    "name": "SwiftCam 1080p Webcam",
+    "category": "peripherals",
+    "price": 2999,
+    "brand": "SwiftCam",
+    "features": [
+      "1080p FHD",
+      "built-in mic",
+      "auto focus",
+      "plug and play",
+      "wide angle"
+    ],
+    "tags": [
+      "webcam",
+      "video call",
+      "work from home",
+      "streaming",
+      "online class",
+      "camera"
+    ]
+  },
+  {
+    "id": "P017",
+    "name": "NoteTab Pro",
+    "category": "stationery",
+    "price": 499,
+    "brand": "WritePro",
+    "features": [
+      "A5 size",
+      "dotted pages",
+      "hardcover",
+      "200 pages",
+      "bookmark ribbon"
+    ],
+    "tags": [
+      "notebook",
+      "journal",
+      "study",
+      "notes",
+      "student",
+      "stationery"
+    ]
+  },
+  {
+    "id": "P018",
+    "name": "GamingPad XL",
+    "category": "peripherals",
+    "price": 1299,
+    "brand": "GameZone",
+    "features": [
+      "XL size 80x30cm",
+      "anti-slip base",
+      "smooth surface",
+      "stitched edges"
+    ],
+    "tags": [
+      "mousepad",
+      "gaming",
+      "desk mat",
+      "XL",
+      "setup",
+      "accessories"
+    ]
+  },
+  {
+    "id": "P019",
+    "name": "BrightDesk LED Lamp",
+    "category": "accessories",
+    "price": 1599,
+    "brand": "BrightZone",
+    "features": [
+      "adjustable brightness",
+      "5 color modes",
+      "USB charging port",
+      "foldable arm",
+      "eye care"
+    ],
+    "tags": [
+      "lamp",
+      "desk lamp",
+      "study lamp",
+      "LED",
+      "student",
+      "lighting",
+      "work from home"
+    ]
+  },
+  {
+    "id": "P020",
+    "name": "PixelPad Drawing Tablet",
+    "category": "peripherals",
+    "price": 6999,
+    "brand": "PixelPro",
+    "features": [
+      "8192 pressure levels",
+      "10x6 inch tablet",
+      "wireless pen",
+      "compatible with Photoshop/Procreate"
+    ],
+    "tags": [
+      "drawing tablet",
+      "graphics tablet",
+      "digital art",
+      "design",
+      "creative",
+      "artist"
+    ]
+  },
+  {
+    "id": "P021",
+    "name": "ErgoChair Lite",
+    "category": "furniture",
+    "price": 4999,
+    "brand": "ComfortSpace",
+    "features": [
+      "ergonomic design",
+      "lumbar support",
+      "breathable mesh"
+    ],
+    "tags": [
+      "chair",
+      "office",
+      "ergonomic",
+      "study",
+      "comfort"
+    ]
+  },
+  {
+    "id": "P022",
+    "name": "UltraSound Mini Speaker",
+    "category": "audio",
+    "price": 1499,
+    "brand": "SoundCore",
+    "features": [
+      "bluetooth",
+      "compact size",
+      "deep bass"
+    ],
+    "tags": [
+      "speaker",
+      "portable",
+      "music",
+      "bluetooth"
+    ]
+  },
+  {
+    "id": "P023",
+    "name": "AeroFit Yoga Mat",
+    "category": "fitness",
+    "price": 899,
+    "brand": "FlexFit",
+    "features": [
+      "non-slip",
+      "eco material",
+      "lightweight"
+    ],
+    "tags": [
+      "yoga",
+      "exercise",
+      "fitness",
+      "home workout"
+    ]
+  },
+  {
+    "id": "P024",
+    "name": "SmartWatch Neo",
+    "category": "wearables",
+    "price": 3499,
+    "brand": "TechWear",
+    "features": [
+      "heart rate monitor",
+      "sleep tracking",
+      "notifications"
+    ],
+    "tags": [
+      "watch",
+      "fitness",
+      "smart",
+      "health"
+    ]
+  },
+  {
+    "id": "P025",
+    "name": "Classic Leather Wallet",
+    "category": "accessories",
+    "price": 799,
+    "brand": "UrbanCarry",
+    "features": [
+      "genuine leather",
+      "compact",
+      "multiple slots"
+    ],
+    "tags": [
+      "wallet",
+      "men",
+      "daily use",
+      "style"
+    ]
+  },
+  {
+    "id": "P026",
+    "name": "Steel Water Bottle",
+    "category": "lifestyle",
+    "price": 499,
+    "brand": "HydroMax",
+    "features": [
+      "insulated",
+      "leak-proof",
+      "durable"
+    ],
+    "tags": [
+      "bottle",
+      "water",
+      "gym",
+      "travel"
+    ]
+  },
+  {
+    "id": "P027",
+    "name": "Gaming Mouse Pro",
+    "category": "peripherals",
+    "price": 1999,
+    "brand": "GameX",
+    "features": [
+      "rgb lighting",
+      "adjustable dpi",
+      "ergonomic grip"
+    ],
+    "tags": [
+      "mouse",
+      "gaming",
+      "rgb",
+      "setup"
+    ]
+  },
+  {
+    "id": "P028",
+    "name": "NoiseBlock Earbuds",
+    "category": "audio",
+    "price": 2499,
+    "brand": "SoundCore",
+    "features": [
+      "ANC",
+      "wireless",
+      "long battery"
+    ],
+    "tags": [
+      "earbuds",
+      "music",
+      "noise cancelling"
+    ]
+  },
+  {
+    "id": "P029",
+    "name": "StudyDesk Basic",
+    "category": "furniture",
+    "price": 3999,
+    "brand": "WoodCraft",
+    "features": [
+      "compact",
+      "sturdy",
+      "minimalist"
+    ],
+    "tags": [
+      "desk",
+      "study",
+      "home",
+      "workspace"
+    ]
+  },
+  {
+    "id": "P030",
+    "name": "LED Strip Lights",
+    "category": "accessories",
+    "price": 699,
+    "brand": "GlowTech",
+    "features": [
+      "rgb colors",
+      "remote control",
+      "easy install"
+    ],
+    "tags": [
+      "lights",
+      "rgb",
+      "room decor"
+    ]
+  },
+  {
+    "id": "P031",
+    "name": "Travel Backpack Pro",
+    "category": "bags",
+    "price": 2499,
+    "brand": "CarryX",
+    "features": [
+      "water resistant",
+      "laptop compartment",
+      "durable"
+    ],
+    "tags": [
+      "bag",
+      "travel",
+      "college",
+      "laptop"
+    ]
+  },
+  {
+    "id": "P032",
+    "name": "Electric Kettle 1.5L",
+    "category": "appliances",
+    "price": 1299,
+    "brand": "KitchenPro",
+    "features": [
+      "fast boil",
+      "auto shut-off",
+      "stainless steel"
+    ],
+    "tags": [
+      "kettle",
+      "kitchen",
+      "tea",
+      "appliance"
+    ]
+  },
+  {
+    "id": "P033",
+    "name": "Minimal Wall Clock",
+    "category": "decor",
+    "price": 599,
+    "brand": "HomeStyle",
+    "features": [
+      "silent movement",
+      "modern design"
+    ],
+    "tags": [
+      "clock",
+      "wall",
+      "decor",
+      "home"
+    ]
+  },
+  {
+    "id": "P034",
+    "name": "Wireless Charger Pad",
+    "category": "accessories",
+    "price": 999,
+    "brand": "ChargePro",
+    "features": [
+      "fast charging",
+      "sleek design"
+    ],
+    "tags": [
+      "charger",
+      "wireless",
+      "phone"
+    ]
+  },
+  {
+    "id": "P035",
+    "name": "Running Shoes Lite",
+    "category": "fashion",
+    "price": 2999,
+    "brand": "RunFlex",
+    "features": [
+      "lightweight",
+      "breathable",
+      "shock absorption"
+    ],
+    "tags": [
+      "shoes",
+      "running",
+      "sports"
+    ]
+  },
+  {
+    "id": "P036",
+    "name": "Laptop Cooling Pad",
+    "category": "peripherals",
+    "price": 1299,
+    "brand": "CoolTech",
+    "features": [
+      "dual fans",
+      "usb powered"
+    ],
+    "tags": [
+      "laptop",
+      "cooling",
+      "accessory"
+    ]
+  },
+  {
+    "id": "P037",
+    "name": "Ceramic Coffee Mug",
+    "category": "lifestyle",
+    "price": 299,
+    "brand": "DailySip",
+    "features": [
+      "heat resistant",
+      "stylish"
+    ],
+    "tags": [
+      "mug",
+      "coffee",
+      "home"
+    ]
+  },
+  {
+    "id": "P038",
+    "name": "Portable Tripod Stand",
+    "category": "accessories",
+    "price": 899,
+    "brand": "CamGear",
+    "features": [
+      "adjustable height",
+      "lightweight"
+    ],
+    "tags": [
+      "tripod",
+      "camera",
+      "mobile"
+    ]
+  },
+  {
+    "id": "P039",
+    "name": "Desk Organizer Set",
+    "category": "stationery",
+    "price": 699,
+    "brand": "NeatDesk",
+    "features": [
+      "multi-compartment",
+      "compact"
+    ],
+    "tags": [
+      "organizer",
+      "desk",
+      "study"
+    ]
+  },
+  {
+    "id": "P040",
+    "name": "Bluetooth Keyboard",
+    "category": "peripherals",
+    "price": 1799,
+    "brand": "TypePro",
+    "features": [
+      "wireless",
+      "compact",
+      "long battery"
+    ],
+    "tags": [
+      "keyboard",
+      "bluetooth",
+      "typing"
+    ]
+  },
+  {
+    "id": "P041",
+    "name": "Hand Blender",
+    "category": "appliances",
+    "price": 1599,
+    "brand": "KitchenPro",
+    "features": [
+      "powerful motor",
+      "easy grip"
+    ],
+    "tags": [
+      "blender",
+      "kitchen"
+    ]
+  },
+  {
+    "id": "P042",
+    "name": "Scented Candle Set",
+    "category": "decor",
+    "price": 499,
+    "brand": "AromaLife",
+    "features": [
+      "long burn",
+      "pleasant fragrance"
+    ],
+    "tags": [
+      "candle",
+      "relax",
+      "decor"
+    ]
+  },
+  {
+    "id": "P043",
+    "name": "Fitness Resistance Bands",
+    "category": "fitness",
+    "price": 799,
+    "brand": "FlexFit",
+    "features": [
+      "durable",
+      "multi-level resistance"
+    ],
+    "tags": [
+      "fitness",
+      "bands",
+      "exercise"
+    ]
+  },
+  {
+    "id": "P044",
+    "name": "Tablet Stand Adjustable",
+    "category": "accessories",
+    "price": 599,
+    "brand": "HoldPro",
+    "features": [
+      "adjustable angle",
+      "sturdy"
+    ],
+    "tags": [
+      "tablet",
+      "stand"
+    ]
+  },
+  {
+    "id": "P045",
+    "name": "Mini Air Purifier",
+    "category": "appliances",
+    "price": 3499,
+    "brand": "PureAir",
+    "features": [
+      "compact",
+      "silent",
+      "filter system"
+    ],
+    "tags": [
+      "air purifier",
+      "home",
+      "health"
+    ]
+  }
+]

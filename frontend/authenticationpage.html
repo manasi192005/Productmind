@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<title>ProductMind | Sign In</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="common.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-container": "#4388fd",
+                      "on-surface-variant": "#a3aac4",
+                      "surface-container-highest": "#192540",
+                      "on-error-container": "#ffb2b9",
+                      "on-tertiary-fixed-variant": "#00377b",
+                      "secondary-fixed-dim": "#ceb9ff",
+                      "surface-container": "#0f1930",
+                      "tertiary-dim": "#699cff",
+                      "outline": "#6d758c",
+                      "on-tertiary-fixed": "#00163b",
+                      "surface-container-high": "#141f38",
+                      "surface-container-low": "#091328",
+                      "tertiary-fixed": "#8ab0ff",
+                      "on-secondary": "#280067",
+                      "error-dim": "#d73357",
+                      "on-secondary-fixed-variant": "#5f28c8",
+                      "on-primary": "#0f00a4",
+                      "primary": "#a3a6ff",
+                      "inverse-surface": "#faf8ff",
+                      "on-error": "#490013",
+                      "secondary-container": "#5516be",
+                      "on-tertiary-container": "#000311",
+                      "on-primary-container": "#0a0081",
+                      "primary-fixed-dim": "#8387ff",
+                      "surface-variant": "#192540",
+                      "on-primary-fixed-variant": "#0e009d",
+                      "on-background": "#dee5ff",
+                      "on-primary-fixed": "#000000",
+                      "on-secondary-fixed": "#40009b",
+                      "primary-dim": "#6063ee",
+                      "on-tertiary": "#001e4a",
+                      "inverse-primary": "#494bd7",
+                      "secondary-fixed": "#dac9ff",
+                      "surface-tint": "#a3a6ff",
+                      "background": "#060e20",
+                      "error": "#ff6e84",
+                      "primary-container": "#9396ff",
+                      "surface": "#060e20",
+                      "error-container": "#a70138",
+                      "inverse-on-surface": "#4d556b",
+                      "on-secondary-container": "#d9c8ff",
+                      "outline-variant": "#40485d",
+                      "tertiary": "#699cff",
+                      "primary-fixed": "#9396ff",
+                      "secondary": "#ac8aff",
+                      "tertiary-fixed-dim": "#73a2ff",
+                      "secondary-dim": "#8455ef",
+                      "on-surface": "#dee5ff",
+                      "surface-container-lowest": "#000000",
+                      "surface-bright": "#1f2b49",
+                      "surface-dim": "#060e20"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Manrope"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #060e20;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(96, 99, 238, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(172, 138, 255, 0.15) 0px, transparent 50%);
+        }
+        .glass-panel {
+            backdrop-filter: blur(24px);
+            background-color: rgba(25, 37, 64, 0.6);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 0 1px rgba(163, 166, 255, 0.2), 0 4px 20px -2px rgba(172, 138, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="font-body text-on-surface min-h-screen flex items-center justify-center p-6 selection:bg-primary/30">
+<!-- Global Navigation Suppressed for Transactional Page per Design Protocol -->
+<main class="w-full max-w-md relative">
+<!-- Background Ambient Glows -->
+<div class="absolute -top-24 -left-24 w-64 h-64 bg-primary-dim/20 rounded-full blur-[100px]"></div>
+<div class="absolute -bottom-24 -right-24 w-64 h-64 bg-secondary-dim/20 rounded-full blur-[100px]"></div>
+<div class="glass-panel relative z-10 p-8 md:p-12 rounded-xl shadow-2xl overflow-hidden">
+<!-- Logo/Header -->
+<div class="text-center mb-10">
+<h1 class="font-headline text-4xl font-light tracking-tighter bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
+                    ProductMind
+                </h1>
+<p class="text-on-surface-variant font-label text-xs uppercase tracking-[0.2em]">The Ethereal Curator</p>
+</div>
+<!-- Form Content -->
+<div class="space-y-6">
+<!-- Username -->
+<div class="space-y-2">
+<label class="font-label text-xs text-on-surface-variant font-medium ml-1">Username</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">person</span>
+<input id="pm-username" class="w-full bg-surface-container-highest border-none rounded-xl py-3.5 pl-12 pr-4 text-on-surface placeholder:text-outline/50 transition-all duration-300" placeholder="curator_ai" type="text"/>
+</div>
+</div>
+<!-- Email -->
+<div class="space-y-2">
+<label class="font-label text-xs text-on-surface-variant font-medium ml-1">Email Address</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">alternate_email</span>
+<input id="pm-email" class="w-full bg-surface-container-highest border-none rounded-xl py-3.5 pl-12 pr-4 text-on-surface placeholder:text-outline/50 transition-all duration-300" placeholder="mind@product.ai" type="email"/>
+</div>
+</div>
+<!-- Password -->
+<div class="space-y-2">
+<label class="font-label text-xs text-on-surface-variant font-medium ml-1">Password</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">lock</span>
+<input id="pm-password" class="w-full bg-surface-container-highest border-none rounded-xl py-3.5 pl-12 pr-12 text-on-surface placeholder:text-outline/50 transition-all duration-300" placeholder="••••••••" type="password"/>
+<button id="pm-pw-toggle" type="button" class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors">
+<span id="pm-pw-icon" class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</div>
+</div>
+<!-- Error Message Placeholder (Hidden by default, shown here as reference) -->
+<div id="pm-error-msg" class="flex items-center gap-2 bg-error-container/20 border border-error-container/10 p-3 rounded-lg hidden">
+<span class="material-symbols-outlined text-error text-sm">error</span>
+<p class="text-error-dim text-xs font-medium">Please fill in all fields to continue.</p>
+</div>
+<!-- CTAs -->
+<div class="space-y-4 pt-4">
+<button id="pm-login-btn" class="w-full py-4 rounded-full bg-gradient-to-r from-primary to-secondary text-on-primary font-headline font-semibold text-sm tracking-wide shadow-lg shadow-primary-dim/20 active:scale-[0.98] transition-transform duration-200">
+                        Login
+                    </button>
+<button id="pm-signup-btn" class="w-full py-4 rounded-full bg-surface-variant/40 border border-outline-variant/15 text-on-surface font-headline font-semibold text-sm tracking-wide backdrop-blur hover:bg-surface-variant/60 active:scale-[0.98] transition-all duration-200">
+                        Create Account
+                    </button>
+</div>
+<!-- Secondary Actions -->
+<div class="text-center pt-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors text-xs font-medium font-label">
+                        Forgot your sequence?
+                    </button>
+</div>
+</div>
+<!-- Visual Texture -->
+<div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+</div>
+<!-- Footer Decoration -->
+<div class="mt-8 flex justify-center gap-8 opacity-40">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[10px]">shield_lock</span>
+<span class="font-label text-[10px] tracking-widest uppercase">Secure Node</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[10px]">bolt</span>
+<span class="font-label text-[10px] tracking-widest uppercase">Zero Latency</span>
+</div>
+</div>
+</main>
+<!-- Decorative Image Layer (Off-canvas feel) -->
+<div class="fixed top-20 right-[-100px] w-[400px] h-[400px] opacity-10 pointer-events-none hidden lg:block">
+<img class="w-full h-full object-contain mix-blend-screen" data-alt="abstract iridescent 3D fluid shape with organic curves and flowing metallic textures on a deep black background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsQyYmX76gFP69LG7gl9QBMZbST1PmWVHvysfu1IF3GMuL1dSRQUFnSZWYn9VGicBcEfNXm0DqCA-OYMcudisZXQk0BlxsBo2boZQEaTH-drI-v1v-KOzljisqMH-FyQgvpzC1o-IOQBSYOKC_mUBZ9YiveMvm9PBBi7EOaiQ6U-c-EdelTsXzVfYDCb_1gUQzyV1hKOaunSGjqUFQ1NpTmN5KPlREsczicD3Wfs0uvB1c-868-2ZJRir3wkWKfA1mABeTJDMydFQ"/>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (isAuthenticated()) { navigateTo('home.html'); return; }
+
+  const usernameEl = document.getElementById('pm-username');
+  const emailEl    = document.getElementById('pm-email');
+  const passwordEl = document.getElementById('pm-password');
+  const errorEl    = document.getElementById('pm-error-msg');
+  const errorText  = errorEl.querySelector('p');
+  const pwToggle   = document.getElementById('pm-pw-toggle');
+  const pwIcon     = document.getElementById('pm-pw-icon');
+  const loginBtn   = document.getElementById('pm-login-btn');
+  const signupBtn  = document.getElementById('pm-signup-btn');
+
+  // ── Password toggle ──
+  pwToggle.addEventListener('click', () => {
+    const isHidden = passwordEl.type === 'password';
+    passwordEl.type = isHidden ? 'text' : 'password';
+    pwIcon.textContent = isHidden ? 'visibility_off' : 'visibility';
+  });
+
+  function showError(msg) {
+    errorText.textContent = msg;
+    errorEl.classList.remove('hidden');
+  }
+
+  function setLoading(btn, loading) {
+    btn.disabled = loading;
+    btn.style.opacity = loading ? '0.7' : '1';
+  }
+
+  // ── LOGIN ──
+  loginBtn.addEventListener('click', async () => {
+    errorEl.classList.add('hidden');
+    const u = usernameEl.value.trim();
+    const p = passwordEl.value.trim();
+    if (!u || !p) { showError('Please enter username and password.'); return; }
+
+    setLoading(loginBtn, true);
+    loginBtn.textContent = 'Logging in...';
+    try {
+      const data = await apiLogin(u, p);
+      login(data.access_token, data.username);
+      navigateTo('home.html');
+    } catch (err) {
+      showError(err.message);
+    } finally {
+      setLoading(loginBtn, false);
+      loginBtn.textContent = 'Login';
+    }
+  });
+
+  // ── SIGNUP ──
+  signupBtn.addEventListener('click', async () => {
+    errorEl.classList.add('hidden');
+    const u = usernameEl.value.trim();
+    const e = emailEl.value.trim();
+    const p = passwordEl.value.trim();
+    if (!u || !e || !p) { showError('Please fill in all fields to sign up.'); return; }
+
+    setLoading(signupBtn, true);
+    signupBtn.textContent = 'Creating account...';
+    try {
+      await apiSignup(u, e, p);
+      // Auto-login after successful signup
+      const data = await apiLogin(u, p);
+      login(data.access_token, data.username);
+      navigateTo('home.html');
+    } catch (err) {
+      showError(err.message);
+    } finally {
+      setLoading(signupBtn, false);
+      signupBtn.textContent = 'Create Account';
+    }
+  });
+
+  // ── Enter key support ──
+  [usernameEl, emailEl, passwordEl].forEach(el => {
+    el.addEventListener('keydown', e => { if (e.key === 'Enter') loginBtn.click(); });
+  });
+});
+</script>
+</body></html>
