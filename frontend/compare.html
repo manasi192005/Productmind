@@ -426,10 +426,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Find corresponding meta data for pros/cons/verdict using API schema
         const prodMeta = (meta.products && meta.products.find(p => p.id === prod.id)) || meta || {};
         
-        // Image placeholder mapping instead of random headphone dummies
+        // Use product-aware image sources with fallbacks so frames do not stay blank.
         const imgEl = col.querySelector('img');
-        if (imgEl && prod.category) {
-            imgEl.src = `https://placehold.co/600x400/192540/a3a6ff?text=${encodeURIComponent(prod.category.toUpperCase())}`;
+        if (imgEl) {
+            imgEl.src = getProductImageUrl(prod);
+            imgEl.dataset.productImage = JSON.stringify(getProductImageSources(prod));
+            imgEl.dataset.imageIndex = '0';
             imgEl.alt = prod.name;
         }
 
@@ -495,6 +497,8 @@ document.addEventListener('DOMContentLoaded', () => {
             consList.innerHTML = prodMeta.cons.map(c => `<li>${c}</li>`).join('');
         }
     });
+
+    wireProductImageFallbacks(matrix);
     
   } else if (matrix) {
      matrix.innerHTML = `<div class="col-span-full py-20 text-center text-on-surface-variant bg-surface-container-high rounded-xl border border-outline-variant/10 shadow-lg">No comparison data available. Please search on the Discover page.</div>`;

@@ -375,57 +375,29 @@
       renderTopNav('discover');
       renderBottomNav('discover');
 
-
       const input = document.getElementById('pm-search-input');
       const askBtn = document.getElementById('pm-ask-btn');
 
-
-      // Restore last query
       const last = getLastQuery();
       if (last) input.value = last;
 
-
-      // ── Suggestion pills: fill input AND trigger API ──
-      document.querySelectorAll('.pm-pill').forEach(pill => {
-        pill.addEventListener('click', () => {
-          input.value = pill.textContent.trim();
-          input.focus();
-          handleAsk();
-        });
-      });
-
-
-      // ── Ask AI: call /recommend and render results ──
-      async function handleAsk() {
-        const q = input.value.trim();
-        if (!q) return;
-        saveQuery(q);
-
-
-        // Loading state
-        askBtn.innerHTML = '<span class="material-symbols-outlined text-xl" style="font-variation-settings:\'FILL\' 1;animation:spin 1s linear infinite">autorenew</span>&nbsp;Processing...';
-        askBtn.disabled = true;
-        showResultsLoading();
-
-
-        try {
-          const data = await apiRecommend(q);
-          renderResults(data);
-        } catch (err) {
-          showResultsError(err.message);
-        } finally {
-          askBtn.innerHTML = '<span class="material-symbols-outlined text-xl" style="font-variation-settings:\'FILL\' 1;">auto_awesome</span>&nbsp;Ask AI';
-          askBtn.disabled = false;
-        }
+      function googleLinkForProduct(product) {
+        if (product.google_link) return product.google_link;
+        const keyword = encodeURIComponent(`${product.name || 'product'} buy online`);
+        return `https://www.google.com/search?q=${keyword}`;
       }
 
+      function encodeProduct(product) {
+        return encodeURIComponent(JSON.stringify(product));
+      }
 
-      askBtn.addEventListener('click', handleAsk);
-      input.addEventListener('keydown', e => { if (e.key === 'Enter') handleAsk(); });
-
-
-      // ── RESULTS RENDERING ──────────────────────────────────
-
+      function decodeProduct(serialized) {
+        try {
+          return JSON.parse(decodeURIComponent(serialized));
+        } catch {
+          return null;
+        }
+      }
 
       function getResultsSection() {
         let sec = document.getElementById('pm-results-section');
@@ -433,14 +405,12 @@
           sec = document.createElement('section');
           sec.id = 'pm-results-section';
           sec.className = 'space-y-10 animate-fade-in';
-          // Insert after the hero section
           const main = document.querySelector('main');
           const hero = main.querySelector('header');
           hero.insertAdjacentElement('afterend', sec);
         }
         return sec;
       }
-
 
       function showResultsLoading() {
         const sec = getResultsSection();
@@ -450,7 +420,6 @@
         <p class="font-label text-sm uppercase tracking-widest">Consulting the intelligence...</p>
       </div>`;
       }
-
 
       function showResultsError(msg) {
         const sec = getResultsSection();
@@ -464,57 +433,106 @@
       </div>`;
       }
 
+      async function handleAsk() {
+        const q = input.value.trim();
+        if (!q) return;
+        saveQuery(q);
+
+        askBtn.innerHTML = '<span class="material-symbols-outlined text-xl" style="font-variation-settings:\'FILL\' 1;animation:spin 1s linear infinite">autorenew</span>&nbsp;Processing...';
+        askBtn.disabled = true;
+        showResultsLoading();
+
+        try {
+          const data = await apiRecommend(q, getHistory().slice(0, 5));
+          addToHistory(q, data.top_pick?.name, data.top_pick?.category);
+          renderResults(data);
+        } catch (err) {
+          showResultsError(err.message);
+        } finally {
+          askBtn.innerHTML = '<span class="material-symbols-outlined text-xl" style="font-variation-settings:\'FILL\' 1;">auto_awesome</span>&nbsp;Ask AI';
+          askBtn.disabled = false;
+        }
+      }
+
+      const debouncedAsk = debounce(handleAsk, 500);
+      askBtn.addEventListener('click', debouncedAsk);
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') debouncedAsk(); });
+
+      document.querySelectorAll('.pm-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          input.value = pill.textContent.trim();
+          input.focus();
+          handleAsk();
+        });
+      });
+
+      window.toggleSave = function toggleSave(product) {
+        if (!product) return;
+        if (isProductSaved(product.id)) {
+          removeSavedProduct(product.id);
+        } else {
+          saveProduct(product);
+        }
+        const icon = document.querySelector(`#save-btn-${product.id} .material-symbols-outlined`);
+        if (icon) {
+          icon.style = isProductSaved(product.id) ? "font-variation-settings:'FILL' 1;" : '';
+        }
+      };
 
       function renderResults(data) {
         const sec = getResultsSection();
-        const top = data.top_pick;
+        const top = data.top_pick || {};
         const alts = data.alternatives || [];
         const prefs = data.extracted_preferences || {};
-        const plan = data.agent_plan || [];
+        const followups = data.followups || [];
+        const comparisonText = data.comparison || '';
+        const insight = data.insight || '';
+        const answer = data.answer || '';
 
         localStorage.setItem("comparisonProducts", JSON.stringify([
           data.top_pick,
           ...(data.alternatives ? data.alternatives.slice(0, 2) : [])
         ]));
-        localStorage.setItem("comparisonMeta", JSON.stringify(data.comparison_data || data.comparison || {}));
+        localStorage.setItem("comparisonMeta", JSON.stringify(data.comparison_data || {}));
 
+        const prefChips = [
+          prefs.category && `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">📂 ${prefs.category}</span>`,
+          prefs.max_price && `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">💸 Under ₹${Number(prefs.max_price).toLocaleString('en-IN')}</span>`,
+          prefs.intent && `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">🧠 ${prefs.intent}</span>`,
+          ...(prefs.keywords || []).slice(0, 3).map(keyword => `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">🔍 ${keyword}</span>`),
+        ].filter(Boolean).join('');
 
-        // Build alternative cards
-        const altCards = alts.map(p => `
+        const altCards = alts.map(product => `
       <div class="bg-surface-container-high rounded-xl overflow-hidden flex flex-col shadow-lg group hover:shadow-primary/10 transition-shadow">
+        <div class="h-44 overflow-hidden">
+          <img
+            src="${getProductImageUrl(product)}"
+            alt="${product.name}"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            data-product-image='${JSON.stringify(getProductImageSources(product))}'
+            data-image-index="0"
+          />
+        </div>
         <div class="p-6 flex-1 flex flex-col gap-3">
-          <div class="flex justify-between items-start">
-            <h4 class="font-headline font-bold text-on-surface">${p.name}</h4>
-            <span class="text-secondary font-bold text-lg">₹${p.price.toLocaleString('en-IN')}</span>
+          <div class="flex justify-between items-start gap-3">
+            <h4 class="font-headline font-bold text-on-surface">${product.name}</h4>
+            <span class="text-secondary font-bold text-lg">₹${Number(product.price || 0).toLocaleString('en-IN')}</span>
           </div>
-          <span class="text-[10px] uppercase tracking-widest text-primary/60 bg-primary/10 px-2 py-0.5 rounded-full w-fit">${p.category}</span>
-          <p class="text-on-surface-variant text-xs leading-relaxed">${p.features.slice(0, 3).join(' · ')}</p>
+          <span class="text-[10px] uppercase tracking-widest text-primary/60 bg-primary/10 px-2 py-0.5 rounded-full w-fit">${product.category || ''}</span>
+          <p class="text-on-surface-variant text-xs leading-relaxed">${(product.features || []).slice(0, 3).join(' · ')}</p>
           <div class="flex flex-wrap gap-1 mt-1">
-            ${p.tags.slice(0, 3).map(t => `<span class="text-[10px] px-2 py-0.5 bg-surface-container-highest text-outline rounded-full">${t}</span>`).join('')}
+            ${(product.tags || []).slice(0, 3).map(tag => `<span class="text-[10px] px-2 py-0.5 bg-surface-container-highest text-outline rounded-full">${tag}</span>`).join('')}
+          </div>
+          <div class="mt-auto flex gap-3 pt-3">
+            <a href="${googleLinkForProduct(product)}" target="_blank" rel="noopener" class="flex-1 py-2 rounded-full bg-gradient-primary text-on-primary-fixed text-sm font-bold text-center">View Product</a>
+            <button class="pm-save-btn p-3 rounded-full border border-outline-variant/30 hover:bg-surface-container-highest transition-colors" id="save-btn-${product.id}" data-product="${encodeProduct(product)}">
+              <span class="material-symbols-outlined" style="${isProductSaved(product.id) ? "font-variation-settings:'FILL' 1;" : ''}">bookmark</span>
+            </button>
           </div>
         </div>
       </div>`).join('');
 
-
-        // Extracted preference chips
-        const prefChips = [
-          prefs.category && `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">📂 ${prefs.category}</span>`,
-          prefs.max_price && `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">💸 Under ₹${Number(prefs.max_price).toLocaleString('en-IN')}</span>`,
-          prefs.use_case && `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">🎯 ${prefs.use_case}</span>`,
-          ...(prefs.keywords || []).slice(0, 3).map(k => `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">🔍 ${k}</span>`),
-        ].filter(Boolean).join('');
-
-
-        // Agent plan steps
-        const planSteps = plan.map((step, i) => `
-      <div class="flex items-start gap-3">
-        <div class="w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">${i + 1}</div>
-        <p class="text-on-surface-variant text-sm">${step}</p>
-      </div>`).join('');
-
-
         sec.innerHTML = `
-      <!-- Section Header -->
       <div class="flex items-end justify-between border-b border-outline-variant/15 pb-6">
         <div>
           <h2 class="font-headline text-3xl font-bold tracking-tight">AI Recommendations</h2>
@@ -522,85 +540,133 @@
         </div>
       </div>
 
+      ${answer ? `
+      <div class="bg-surface-container-low rounded-xl p-5 border border-tertiary/20 mb-4">
+        <div class="flex items-center gap-2 text-tertiary mb-2">
+          <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">help</span>
+          <span class="text-xs font-bold uppercase tracking-wider">Direct Answer</span>
+        </div>
+        <p class="text-sm text-on-surface leading-relaxed">${answer}</p>
+      </div>` : ''}
 
-      <!-- Extracted Preferences -->
       ${prefChips ? `
       <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/10">
         <p class="text-xs font-label text-on-surface-variant uppercase tracking-widest mb-3">What the AI understood</p>
         <div class="flex flex-wrap gap-2">${prefChips}</div>
       </div>` : ''}
 
-
-      <!-- TOP PICK -->
-      <div class="relative group bg-surface-container-low rounded-xl overflow-hidden flex flex-col md:flex-row shadow-2xl border border-primary/10">
+      <div class="relative group bg-surface-container-low rounded-xl overflow-hidden shadow-2xl border border-primary/10">
         <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none"></div>
-        <!-- Badge -->
-        <div class="absolute top-4 left-4 z-10 bg-primary text-on-primary-fixed px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase">⭐ Top Pick</div>
-        <!-- Info -->
-        <div class="relative z-10 p-8 flex-1 flex flex-col gap-5">
-          <div class="flex justify-between items-start flex-wrap gap-3 mt-6">
-            <div>
-              <h3 class="text-2xl font-headline font-bold text-on-surface">${top.name}</h3>
-              <span class="text-xs text-primary/70 uppercase tracking-widest">${top.brand} · ${top.category}</span>
-            </div>
-            <span class="text-3xl font-headline font-bold text-primary">₹${top.price.toLocaleString('en-IN')}</span>
+        <div class="grid grid-cols-1 md:grid-cols-2">
+          <div class="relative min-h-[280px]">
+            <img
+              src="${getProductImageUrl(top)}"
+              alt="${top.name || 'Product'}"
+              class="w-full h-full object-cover"
+              data-product-image='${JSON.stringify(getProductImageSources(top))}'
+              data-image-index="0"
+            />
+            <div class="absolute top-4 left-4 z-10 bg-primary text-on-primary-fixed px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase">Top Pick</div>
           </div>
-          <!-- Features -->
-          <div class="flex flex-wrap gap-2">
-            ${top.features.map(f => `<span class="text-xs px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-on-surface-variant">${f}</span>`).join('')}
-          </div>
-          <!-- AI Explanation -->
-          <div class="bg-surface-container/60 border border-primary/20 rounded-xl p-5 space-y-2">
-            <div class="flex items-center gap-2 text-primary">
-              <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">auto_awesome</span>
-              <span class="text-xs font-bold uppercase tracking-wider">AI Reasoning</span>
+          <div class="relative z-10 p-8 flex flex-col gap-5">
+            <div class="flex justify-between items-start flex-wrap gap-3">
+              <div>
+                <h3 class="text-2xl font-headline font-bold text-on-surface">${top.name || 'No product found'}</h3>
+                <span class="text-xs text-primary/70 uppercase tracking-widest">${top.brand || 'N/A'} · ${top.category || 'N/A'}</span>
+              </div>
+              <span class="text-3xl font-headline font-bold text-primary">₹${Number(top.price || 0).toLocaleString('en-IN')}</span>
             </div>
-            <p class="text-sm text-on-surface leading-relaxed italic" id="pm-ai-explanation"></p>
+            <div class="flex flex-wrap gap-2">
+              ${(top.features || []).map(feature => `<span class="text-xs px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-on-surface-variant">${feature}</span>`).join('')}
+            </div>
+            <div class="bg-surface-container/60 border border-primary/20 rounded-xl p-5 space-y-2">
+              <div class="flex items-center gap-2 text-primary">
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">auto_awesome</span>
+                <span class="text-xs font-bold uppercase tracking-wider">AI Reasoning</span>
+              </div>
+              <p class="text-sm text-on-surface leading-relaxed italic" id="pm-ai-explanation"></p>
+            </div>
+            ${insight ? `
+            <div class="bg-surface-container/60 border border-secondary/20 rounded-xl p-5 space-y-2">
+              <div class="flex items-center gap-2 text-secondary">
+                <span class="material-symbols-outlined text-sm">insights</span>
+                <span class="text-xs font-bold uppercase tracking-wider">Personal Insight</span>
+              </div>
+              <p class="text-sm text-on-surface leading-relaxed">${insight}</p>
+            </div>` : ''}
+            <div class="mt-auto flex gap-4">
+              <a href="${googleLinkForProduct(top)}" target="_blank" rel="noopener" class="flex-1 bg-gradient-primary text-on-primary-fixed py-3 rounded-full font-bold transition-transform active:scale-95 text-center">
+                View Product
+              </a>
+              <button class="pm-save-btn p-3 rounded-full border border-outline-variant/30 hover:bg-surface-container-highest transition-colors" id="save-btn-${top.id}" data-product="${encodeProduct(top)}">
+                <span class="material-symbols-outlined" style="${isProductSaved(top.id) ? "font-variation-settings:'FILL' 1;" : ''}">bookmark</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
+      ${comparisonText ? `
+      <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/10">
+        <div class="flex items-center gap-2 text-secondary mb-2">
+          <span class="material-symbols-outlined text-sm">compare_arrows</span>
+          <span class="text-xs font-bold uppercase tracking-wider">Comparison Summary</span>
+        </div>
+        <p class="text-sm text-on-surface leading-relaxed">${comparisonText}</p>
+      </div>` : ''}
 
-      <!-- ALTERNATIVES -->
+      ${followups.length ? `
+      <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/10">
+        <p class="text-xs font-label text-on-surface-variant uppercase tracking-widest mb-3">Refine your search</p>
+        <div class="flex flex-wrap gap-2">
+          ${followups.map(question => `
+            <button class="pm-followup-pill px-4 py-2 rounded-full bg-secondary-container text-on-secondary-container text-sm hover:bg-secondary-container/80 transition-colors" data-question="${encodeURIComponent(question)}">
+              ${question}
+            </button>`).join('')}
+        </div>
+      </div>` : ''}
+
       ${alts.length ? `
       <div>
         <h3 class="font-headline text-xl font-bold tracking-tight mb-5">Alternatives</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${altCards}</div>
       </div>` : ''}
-
-
-      <!-- AGENT PLAN -->
-      ${plan.length ? `
-      <div class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/10">
-        <div class="flex items-center gap-2 text-secondary mb-5">
-          <span class="material-symbols-outlined text-sm">psychology</span>
-          <span class="text-xs font-bold uppercase tracking-wider">Agent Plan — How the AI reasoned</span>
-        </div>
-        <div class="space-y-3">${planSteps}</div>
-      </div>` : ''}
     `;
 
-        // Typing effect for explanation
+        sec.querySelectorAll('.pm-save-btn').forEach(button => {
+          button.addEventListener('click', () => {
+            const product = decodeProduct(button.dataset.product || '');
+            window.toggleSave(product);
+          });
+        });
+
+        sec.querySelectorAll('.pm-followup-pill').forEach(button => {
+          button.addEventListener('click', () => {
+            input.value = decodeURIComponent(button.dataset.question || '');
+            input.focus();
+            handleAsk();
+          });
+        });
+
+        wireProductImageFallbacks(sec);
+
         const explElement = document.getElementById('pm-ai-explanation');
         if (explElement && data.explanation) {
-          const text = data.explanation;
-          const words = text.split(' ');
-          let i = 0;
+          const words = data.explanation.split(' ');
+          let index = 0;
           explElement.innerHTML = '"';
           const timer = setInterval(() => {
-            if (i < words.length) {
-              explElement.innerHTML += words[i] + ' ';
-              i++;
+            if (index < words.length) {
+              explElement.innerHTML += `${words[index]} `;
+              index += 1;
             } else {
-              explElement.innerHTML = explElement.innerHTML.trim() + '"';
+              explElement.innerHTML = `${explElement.innerHTML.trim()}"`;
               clearInterval(timer);
             }
-          }, 40); // 40ms per word for natural typing feel
+          }, 25);
         }
       }
 
-
-      // Spin animation for loading button
       const spinStyle = document.createElement('style');
       spinStyle.textContent = `@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`;
       document.head.appendChild(spinStyle);

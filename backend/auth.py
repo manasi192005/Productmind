@@ -9,16 +9,100 @@ Handles:
 """
 
 import json
+import base64
 import hashlib
+import hmac
 import logging
 import os
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Optional
 
-import jwt
+try:
+    import jwt  # type: ignore
+except ModuleNotFoundError:
+    jwt = None
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
+
+class _FallbackJWT:
+    """Minimal HS256 JWT implementation used when PyJWT is unavailable."""
+
+    class ExpiredSignatureError(Exception):
+        pass
+
+    class InvalidTokenError(Exception):
+        pass
+
+    @staticmethod
+    def _b64url_encode(value: bytes) -> str:
+        return base64.urlsafe_b64encode(value).rstrip(b"=").decode("utf-8")
+
+    @staticmethod
+    def _b64url_decode(value: str) -> bytes:
+        padding = "=" * (-len(value) % 4)
+        return base64.urlsafe_b64decode(f"{value}{padding}")
+
+    @classmethod
+    def encode(cls, payload: dict, secret: str, algorithm: str = "HS256") -> str:
+        if algorithm != "HS256":
+            raise ValueError("Fallback JWT encoder only supports HS256.")
+
+        header = {"alg": "HS256", "typ": "JWT"}
+        normalized_payload = {}
+        for key, value in payload.items():
+            if isinstance(value, datetime):
+                normalized_payload[key] = int(value.timestamp())
+            else:
+                normalized_payload[key] = value
+
+        header_segment = cls._b64url_encode(
+            json.dumps(header, separators=(",", ":")).encode("utf-8")
+        )
+        payload_segment = cls._b64url_encode(
+            json.dumps(normalized_payload, separators=(",", ":")).encode("utf-8")
+        )
+        signing_input = f"{header_segment}.{payload_segment}".encode("utf-8")
+        signature = hmac.new(secret.encode("utf-8"), signing_input, hashlib.sha256).digest()
+        signature_segment = cls._b64url_encode(signature)
+        return f"{header_segment}.{payload_segment}.{signature_segment}"
+
+    @classmethod
+    def decode(cls, token: str, secret: str, algorithms: list[str] | None = None) -> dict:
+        if algorithms and "HS256" not in algorithms:
+            raise cls.InvalidTokenError("Unsupported JWT algorithm.")
+
+        parts = token.split(".")
+        if len(parts) != 3:
+            raise cls.InvalidTokenError("Malformed token.")
+
+        header_segment, payload_segment, signature_segment = parts
+        signing_input = f"{header_segment}.{payload_segment}".encode("utf-8")
+        expected_signature = hmac.new(
+            secret.encode("utf-8"),
+            signing_input,
+            hashlib.sha256,
+        ).digest()
+        actual_signature = cls._b64url_decode(signature_segment)
+
+        if not hmac.compare_digest(expected_signature, actual_signature):
+            raise cls.InvalidTokenError("Invalid token signature.")
+
+        try:
+            payload = json.loads(cls._b64url_decode(payload_segment).decode("utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError, ValueError) as exc:
+            raise cls.InvalidTokenError("Invalid token payload.") from exc
+
+        exp = payload.get("exp")
+        if exp is not None and float(exp) < datetime.now(timezone.utc).timestamp():
+            raise cls.ExpiredSignatureError("Token has expired.")
+
+        return payload
+
+
+if jwt is None:
+    jwt = _FallbackJWT
 
 # ─── CONFIG ──────────────────────────────────────────────────────────────────
 

@@ -277,6 +277,73 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTopNav('saved');
   renderSidebar('saved');
   renderBottomNav('saved');
+
+  function productLink(product) {
+    if (product.google_link) return product.google_link;
+    return `https://www.google.com/search?q=${encodeURIComponent((product.name || 'product') + ' buy online')}`;
+  }
+
+  function renderSavedProducts() {
+    const saved = getSavedProducts();
+    const grid = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-3');
+    const emptyState = document.querySelector('.hidden.flex-col.items-center.justify-center.py-24.text-center');
+    const footer = document.querySelector('.flex.justify-center.border-t');
+    const subtitle = document.querySelector('main p.text-on-surface-variant.text-lg.font-body.max-w-xl');
+
+    if (!grid || !emptyState) return;
+
+    if (subtitle) {
+      subtitle.textContent = saved.length
+        ? `You have ${saved.length} saved product${saved.length === 1 ? '' : 's'} ready to revisit.`
+        : 'Your curation journey starts here. Explore our AI-powered recommendations and save the products that capture your intelligence.';
+    }
+
+    if (!saved.length) {
+      grid.innerHTML = '';
+      grid.classList.add('hidden');
+      emptyState.classList.remove('hidden');
+      emptyState.classList.add('flex');
+      if (footer) footer.classList.add('hidden');
+      const actionBtn = emptyState.querySelector('button');
+      if (actionBtn) {
+        actionBtn.onclick = () => navigateTo('home.html');
+      }
+      return;
+    }
+
+    grid.classList.remove('hidden');
+    emptyState.classList.add('hidden');
+    emptyState.classList.remove('flex');
+    if (footer) footer.classList.add('hidden');
+
+    grid.innerHTML = saved.map(product => `
+      <div class="bg-surface-container-high rounded-xl p-6 flex flex-col gap-3 relative shadow-xl shadow-black/20">
+        <button data-remove-id="${product.id}"
+          class="absolute top-4 right-4 text-on-surface-variant hover:text-error transition-colors">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+        <h4 class="font-headline font-bold text-on-surface pr-8">${product.name}</h4>
+        <span class="text-primary font-bold text-lg">₹${Number(product.price || 0).toLocaleString('en-IN')}</span>
+        <span class="text-xs uppercase tracking-widest text-primary/60 bg-primary/10 px-2 py-0.5 rounded-full w-fit">${product.category || ''}</span>
+        <p class="text-on-surface-variant text-sm leading-relaxed">${(product.features || []).slice(0, 3).join(' · ')}</p>
+        <div class="mt-2 flex gap-3">
+          <a href="${productLink(product)}" target="_blank"
+            class="flex-1 text-center py-2 rounded-full bg-gradient-to-br from-primary to-secondary text-on-primary-fixed text-sm font-bold">
+            View Product
+          </a>
+        </div>
+      </div>
+    `).join('');
+
+    grid.querySelectorAll('[data-remove-id]').forEach(button => {
+      button.addEventListener('click', () => {
+        removeSavedProduct(button.dataset.removeId);
+        renderSavedProducts();
+      });
+    });
+  }
+
+  renderSavedProducts();
 });
 </script>
 </body></html>

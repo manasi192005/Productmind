@@ -848,5 +848,621 @@
       "home",
       "health"
     ]
+  },
+  {
+    "id": "P046",
+    "name": "Nova X5 5G",
+    "category": "electronics",
+    "price": 15999,
+    "brand": "NovaTech",
+    "features": [
+      "6.6 inch FHD+ 120Hz display",
+      "50MP dual camera",
+      "5000mAh battery",
+      "33W fast charging",
+      "128GB storage"
+    ],
+    "tags": [
+      "mobile",
+      "smartphone",
+      "5g phone",
+      "budget phone",
+      "android"
+    ]
+  },
+  {
+    "id": "P047",
+    "name": "PixelMax A2",
+    "category": "electronics",
+    "price": 21999,
+    "brand": "PixelMax",
+    "features": [
+      "AMOLED display",
+      "64MP OIS camera",
+      "5000mAh battery",
+      "8GB RAM",
+      "128GB storage"
+    ],
+    "tags": [
+      "mobile",
+      "smartphone",
+      "camera phone",
+      "android",
+      "5g"
+    ]
+  },
+  {
+    "id": "P048",
+    "name": "Volt S Pro",
+    "category": "electronics",
+    "price": 28999,
+    "brand": "Volt",
+    "features": [
+      "Snapdragon 7 series chipset",
+      "120Hz AMOLED display",
+      "50MP triple camera",
+      "67W fast charging",
+      "256GB storage"
+    ],
+    "tags": [
+      "mobile",
+      "smartphone",
+      "performance phone",
+      "5g phone",
+      "android"
+    ]
+  },
+  {
+    "id": "P049",
+    "name": "Astra Note 12",
+    "category": "electronics",
+    "price": 12499,
+    "brand": "Astra",
+    "features": [
+      "6.7 inch display",
+      "6000mAh battery",
+      "50MP AI camera",
+      "stereo speakers",
+      "128GB storage"
+    ],
+    "tags": [
+      "mobile",
+      "smartphone",
+      "battery phone",
+      "budget mobile",
+      "android"
+    ]
+  },
+  {
+    "id": "P050",
+    "name": "Zen One Compact",
+    "category": "electronics",
+    "price": 19999,
+    "brand": "ZenOne",
+    "features": [
+      "compact 6.1 inch OLED",
+      "wireless charging",
+      "dual rear camera",
+      "8GB RAM",
+      "128GB storage"
+    ],
+    "tags": [
+      "mobile",
+      "smartphone",
+      "compact phone",
+      "premium feel",
+      "5g"
+    ]
+  },
+  {
+    "id": "P051",
+    "name": "GameRush X7",
+    "category": "electronics",
+    "price": 32999,
+    "brand": "GameRush",
+    "features": [
+      "144Hz AMOLED display",
+      "gaming mode triggers",
+      "liquid cooling",
+      "6000mAh battery",
+      "256GB storage"
+    ],
+    "tags": [
+      "mobile",
+      "smartphone",
+      "gaming phone",
+      "5g",
+      "high performance"
+    ]
+  },
+  {
+    "id": "P052",
+    "name": "CamEdge Pro 5G",
+    "category": "electronics",
+    "price": 38999,
+    "brand": "CamEdge",
+    "features": [
+      "50MP OIS main camera",
+      "telephoto lens",
+      "4K video recording",
+      "120Hz AMOLED display",
+      "256GB storage"
+    ],
+    "tags": [
+      "mobile",
+      "smartphone",
+      "camera phone",
+      "premium mobile",
+      "android"
+    ]
+  },
+  {
+    "id": "P053",
+    "name": "Orbit Ultra",
+    "category": "electronics",
+    "price": 57999,
+    "brand": "Orbit",
+    "features": [
+      "flagship processor",
+      "LTPO AMOLED display",
+      "triple flagship cameras",
+      "wireless charging",
+      "512GB storage"
+    ],
+    "tags": [
+      "mobile",
+      "smartphone",
+      "flagship phone",
+      "premium mobile",
+      "5g"
+    ]
+  },
+  {
+    "id": "P054",
+    "name": "AeroBook 14",
+    "category": "electronics",
+    "price": 42999,
+    "brand": "AeroBook",
+    "features": [
+      "Ryzen 5 processor",
+      "16GB RAM",
+      "512GB SSD",
+      "14 inch FHD display",
+      "backlit keyboard"
+    ],
+    "tags": [
+      "laptop",
+      "student laptop",
+      "office laptop",
+      "ultrabook",
+      "windows laptop"
+    ]
+  },
+  {
+    "id": "P055",
+    "name": "LiteNote Student 15",
+    "category": "electronics",
+    "price": 31999,
+    "brand": "LiteNote",
+    "features": [
+      "Intel Core i3",
+      "8GB RAM",
+      "512GB SSD",
+      "15.6 inch display",
+      "long battery life"
+    ],
+    "tags": [
+      "laptop",
+      "budget laptop",
+      "student laptop",
+      "daily use laptop",
+      "windows"
+    ]
+  },
+  {
+    "id": "P056",
+    "name": "CodeCraft Pro 15",
+    "category": "electronics",
+    "price": 68999,
+    "brand": "CodeCraft",
+    "features": [
+      "Intel Core i7",
+      "16GB RAM",
+      "1TB SSD",
+      "2.5K display",
+      "metal chassis"
+    ],
+    "tags": [
+      "laptop",
+      "work laptop",
+      "developer laptop",
+      "premium laptop",
+      "productivity"
+    ]
+  },
+  {
+    "id": "P057",
+    "name": "GameForge RTX 16",
+    "category": "electronics",
+    "price": 92999,
+    "brand": "GameForge",
+    "features": [
+      "RTX graphics",
+      "16 inch 165Hz display",
+      "Intel Core i7",
+      "16GB RAM",
+      "1TB SSD"
+    ],
+    "tags": [
+      "laptop",
+      "gaming laptop",
+      "high performance laptop",
+      "rtx laptop",
+      "creator laptop"
+    ]
+  },
+  {
+    "id": "P058",
+    "name": "CreatorSlate OLED 14",
+    "category": "electronics",
+    "price": 76999,
+    "brand": "CreatorSlate",
+    "features": [
+      "2.8K OLED display",
+      "Intel Core Ultra processor",
+      "16GB RAM",
+      "1TB SSD",
+      "color accurate screen"
+    ],
+    "tags": [
+      "laptop",
+      "creator laptop",
+      "design laptop",
+      "oled laptop",
+      "premium"
+    ]
+  },
+  {
+    "id": "P059",
+    "name": "TravelMate Air 13",
+    "category": "electronics",
+    "price": 38999,
+    "brand": "TravelMate",
+    "features": [
+      "13.3 inch lightweight body",
+      "Ryzen 5 processor",
+      "16GB RAM",
+      "512GB SSD",
+      "fast charging"
+    ],
+    "tags": [
+      "laptop",
+      "portable laptop",
+      "lightweight laptop",
+      "student laptop",
+      "travel laptop"
+    ]
+  },
+  {
+    "id": "P060",
+    "name": "BassWave ANC 700",
+    "category": "audio",
+    "price": 6999,
+    "brand": "BassWave",
+    "features": [
+      "hybrid ANC",
+      "40h battery",
+      "deep bass tuning",
+      "USB-C fast charging"
+    ],
+    "tags": [
+      "headphones",
+      "wireless headphones",
+      "noise cancelling headphones",
+      "travel audio",
+      "premium sound"
+    ]
+  },
+  {
+    "id": "P061",
+    "name": "StudioMix Pro",
+    "category": "audio",
+    "price": 10999,
+    "brand": "StudioMix",
+    "features": [
+      "Hi-Res audio",
+      "45mm drivers",
+      "multi-device pairing",
+      "50h battery"
+    ],
+    "tags": [
+      "headphones",
+      "wireless headphones",
+      "audiophile headphones",
+      "premium audio",
+      "over ear"
+    ]
+  },
+  {
+    "id": "P062",
+    "name": "AirTune Comfort",
+    "category": "audio",
+    "price": 3499,
+    "brand": "AirTune",
+    "features": [
+      "lightweight frame",
+      "30h battery",
+      "soft ear cushions",
+      "voice assistant support"
+    ],
+    "tags": [
+      "headphones",
+      "budget headphones",
+      "wireless headphones",
+      "lightweight",
+      "music"
+    ]
+  },
+  {
+    "id": "P063",
+    "name": "GamePulse Headset",
+    "category": "audio",
+    "price": 2999,
+    "brand": "GamePulse",
+    "features": [
+      "boom microphone",
+      "surround sound",
+      "memory foam pads",
+      "wired low-latency audio"
+    ],
+    "tags": [
+      "headphones",
+      "gaming headset",
+      "headset",
+      "wired headphones",
+      "gaming audio"
+    ]
+  },
+  {
+    "id": "P064",
+    "name": "AeroPods TWS",
+    "category": "audio",
+    "price": 2999,
+    "brand": "AeroPods",
+    "features": [
+      "quad mic ENC",
+      "36h total battery",
+      "low latency mode",
+      "USB-C case"
+    ],
+    "tags": [
+      "earphones",
+      "earbuds",
+      "tws earbuds",
+      "wireless earphones",
+      "music"
+    ]
+  },
+  {
+    "id": "P065",
+    "name": "QuietPods Pro",
+    "category": "audio",
+    "price": 7999,
+    "brand": "QuietPods",
+    "features": [
+      "adaptive ANC",
+      "spatial audio",
+      "wireless charging",
+      "premium microphones"
+    ],
+    "tags": [
+      "earphones",
+      "earbuds",
+      "premium earbuds",
+      "noise cancelling earbuds",
+      "tws"
+    ]
+  },
+  {
+    "id": "P066",
+    "name": "NeckBeat Flex",
+    "category": "audio",
+    "price": 1799,
+    "brand": "NeckBeat",
+    "features": [
+      "neckband design",
+      "40h battery",
+      "fast pair",
+      "IPX5 splash resistance"
+    ],
+    "tags": [
+      "earphones",
+      "neckband earphones",
+      "wireless earphones",
+      "budget audio",
+      "workout music"
+    ]
+  },
+  {
+    "id": "P067",
+    "name": "SportLoop Earphones",
+    "category": "audio",
+    "price": 999,
+    "brand": "SportLoop",
+    "features": [
+      "secure-fit ear hooks",
+      "sweat resistant",
+      "inline mic",
+      "10mm drivers"
+    ],
+    "tags": [
+      "earphones",
+      "wired earphones",
+      "sports earphones",
+      "budget earphones",
+      "fitness audio"
+    ]
+  },
+  {
+    "id": "P068",
+    "name": "TabOne 10.5",
+    "category": "electronics",
+    "price": 24999,
+    "brand": "TabOne",
+    "features": [
+      "10.5 inch display",
+      "quad speakers",
+      "8GB RAM",
+      "128GB storage",
+      "stylus support"
+    ],
+    "tags": [
+      "tablet",
+      "android tablet",
+      "study tablet",
+      "media tablet",
+      "productivity"
+    ]
+  },
+  {
+    "id": "P069",
+    "name": "NoteSlate Air",
+    "category": "electronics",
+    "price": 32999,
+    "brand": "NoteSlate",
+    "features": [
+      "11 inch 120Hz display",
+      "keyboard cover support",
+      "128GB storage",
+      "quad speakers",
+      "all-day battery"
+    ],
+    "tags": [
+      "tablet",
+      "premium tablet",
+      "work tablet",
+      "study tablet",
+      "multimedia"
+    ]
+  },
+  {
+    "id": "P070",
+    "name": "UltraView 32 QHD",
+    "category": "electronics",
+    "price": 27999,
+    "brand": "UltraView",
+    "features": [
+      "32 inch QHD panel",
+      "165Hz refresh rate",
+      "HDR support",
+      "height adjustable stand"
+    ],
+    "tags": [
+      "monitor",
+      "gaming monitor",
+      "qhd monitor",
+      "large display",
+      "high refresh"
+    ]
+  },
+  {
+    "id": "P071",
+    "name": "WorkView 27 USB-C",
+    "category": "electronics",
+    "price": 18999,
+    "brand": "WorkView",
+    "features": [
+      "27 inch IPS display",
+      "USB-C single cable setup",
+      "100Hz refresh rate",
+      "sRGB accurate colors"
+    ],
+    "tags": [
+      "monitor",
+      "office monitor",
+      "usb-c monitor",
+      "productivity display",
+      "ips monitor"
+    ]
+  },
+  {
+    "id": "P072",
+    "name": "BeatLite Wired Earphones",
+    "category": "audio",
+    "price": 699,
+    "brand": "BeatLite",
+    "features": [
+      "10mm dynamic drivers",
+      "inline microphone",
+      "tangle-free cable",
+      "comfortable silicone tips"
+    ],
+    "tags": [
+      "earphones",
+      "wired earphones",
+      "budget earphones",
+      "music",
+      "calls"
+    ]
+  },
+  {
+    "id": "P073",
+    "name": "PulseBuds Neo",
+    "category": "audio",
+    "price": 1499,
+    "brand": "PulseBuds",
+    "features": [
+      "ENC for calls",
+      "28h total battery",
+      "low latency mode",
+      "USB-C charging"
+    ],
+    "tags": [
+      "earphones",
+      "earbuds",
+      "tws earbuds",
+      "budget earphones",
+      "wireless earphones"
+    ]
+  },
+  {
+    "id": "P074",
+    "name": "BassPods Lite",
+    "category": "audio",
+    "price": 1899,
+    "brand": "BassPods",
+    "features": [
+      "deep bass tuning",
+      "32h battery life",
+      "touch controls",
+      "IPX4 splash resistance"
+    ],
+    "tags": [
+      "earphones",
+      "earbuds",
+      "wireless earphones",
+      "budget audio",
+      "music"
+    ]
+  },
+  {
+    "id": "P075",
+    "name": "SoundMax Lite Headphones",
+    "category": "audio",
+    "price": 2499,
+    "brand": "SoundMax",
+    "features": [
+      "40mm drivers",
+      "25h battery life",
+      "foldable design",
+      "lightweight build"
+    ],
+    "tags": [
+      "headphones",
+      "wireless headphones",
+      "budget headphones",
+      "music",
+      "travel"
+    ]
   }
 ]

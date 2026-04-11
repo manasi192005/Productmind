@@ -21,6 +21,7 @@ def seed():
                 products_data = json.load(f)
                 
             added_count = 0
+            updated_count = 0
             for p_data in products_data:
                 # Check if exists
                 exists = db.query(Product).filter(Product.id == p_data.get("id")).first()
@@ -36,7 +37,16 @@ def seed():
                     )
                     db.add(prod)
                     added_count += 1
+                else:
+                    exists.name = p_data.get("name")
+                    exists.category = p_data.get("category")
+                    exists.price = p_data.get("price")
+                    exists.brand = p_data.get("brand")
+                    exists.features = p_data.get("features", [])
+                    exists.tags = p_data.get("tags", [])
+                    updated_count += 1
             print(f"Added {added_count} new products to the database.")
+            print(f"Updated {updated_count} existing products in the database.")
 
         # Seed Users
         if USERS_FILE.exists():

@@ -35,7 +35,7 @@ class RecommendRequest(BaseModel):
     """Payload for POST /recommend"""
     query: str                  # natural language, e.g. "study table under 5000"
     session_id: Optional[str] = None
-    history: Optional[List[dict]] = []
+    history: Optional[List[Dict[str, Any]]] = []
 
 class Product(BaseModel):
     """Represents a single product from the dataset"""
@@ -46,6 +46,7 @@ class Product(BaseModel):
     brand: str
     features: List[str]
     tags: List[str]
+    google_link: Optional[str] = None
 
 
 class ExtractedPreferences(BaseModel):
@@ -67,3 +68,7 @@ class RecommendResponse(BaseModel):
     agent_plan: List[str]
     comparison_data: Optional[Dict[str, Any]] = None
     session_id: Optional[str] = None
+    answer: str = ""
+    followups: List[str] = []
+    comparison: str = ""
+    insight: str = ""

@@ -9,6 +9,9 @@
 const AUTH_KEY = 'pm_auth_token';
 const USERNAME_KEY = 'pm_username';
 const QUERY_KEY = 'pm_last_query';
+const HISTORY_KEY = 'pm_user_history';
+const MAX_HISTORY = 20;
+const SAVED_KEY = 'pm_saved_products';
 const API_BASE = 'http://localhost:8000';  // FastAPI backend URL
 
 const PAGES = {
@@ -17,6 +20,60 @@ const PAGES = {
   saved: 'saved.html',
   insights: 'insights.html',
   auth: 'authenticationpage.html',
+};
+
+const PRODUCT_IMAGE_LIBRARY = {
+  mobile: [
+    'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1200&q=80',
+  ],
+  laptop: [
+    'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=1200&q=80',
+  ],
+  headphones: [
+    'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=1200&q=80',
+  ],
+  earphones: [
+    'https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?auto=format&fit=crop&w=1200&q=80',
+  ],
+  monitor: [
+    'https://images.unsplash.com/photo-1527443154391-507e9dc6c5cc?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=1200&q=80',
+  ],
+  tablet: [
+    'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1561154464-82e9adf32764?auto=format&fit=crop&w=1200&q=80',
+  ],
+  keyboard: [
+    'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80',
+  ],
+  mouse: [
+    'https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=1200&q=80',
+  ],
+  webcam: [
+    'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1587614382346-4ec70e388b28?auto=format&fit=crop&w=1200&q=80',
+  ],
+  speaker: [
+    'https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=1200&q=80',
+  ],
+  chair: [
+    'https://images.unsplash.com/photo-1505843513577-22bb7d21e455?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1580480055273-228ff5388ef8?auto=format&fit=crop&w=1200&q=80',
+  ],
+  desk: [
+    'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=1200&q=80',
+  ],
+  generic: [
+    'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80',
+  ],
 };
 
 /* ─────────────────────────────────────────────
@@ -48,7 +105,7 @@ async function apiLogin(username, password) {
 }
 
 /** POST /recommend — AI recommendations (needs JWT) */
-async function apiRecommend(query) {
+async function apiRecommend(query, history = []) {
   const token = localStorage.getItem(AUTH_KEY);
   if (!token) throw new Error('Not authenticated.');
   const res = await fetch(`${API_BASE}/recommend`, {
@@ -57,11 +114,25 @@ async function apiRecommend(query) {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
     },
-    body: JSON.stringify({ query }),
+    body: JSON.stringify({ query, history }),
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.detail || 'Recommendation failed.');
   return data;
+}
+
+/* ─────────────────────────────────────────────
+   DEBOUNCE
+───────────────────────────────────────────── */
+/**
+ * Wraps a function with a delay to prevent rapid API calls.
+ */
+function debounce(fn, delay = 500) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
 }
 
 /* ─────────────────────────────────────────────
@@ -123,6 +194,157 @@ function saveQuery(q) {
 
 function getLastQuery() {
   return localStorage.getItem(QUERY_KEY) || '';
+}
+
+/* ─────────────────────────────────────────────
+   PRODUCT IMAGES
+───────────────────────────────────────────── */
+/**
+ * Returns a normalized visual type for the product so we can show a matching image.
+ */
+function getProductVisualType(product) {
+  const text = [
+    product?.name || '',
+    product?.category || '',
+    ...(product?.tags || []),
+    ...(product?.features || []),
+  ].join(' ').toLowerCase();
+
+  if (/(earbud|earbuds|earphone|earphones|tws|neckband)/.test(text)) return 'earphones';
+  if (/(headphone|headphones|headset)/.test(text)) return 'headphones';
+  if (/(mobile|smartphone|iphone|android phone|camera phone|gaming phone)/.test(text)) return 'mobile';
+  if (/(laptop|notebook|ultrabook|macbook)/.test(text)) return 'laptop';
+  if (/(monitor|display|usb-c monitor|qhd monitor)/.test(text)) return 'monitor';
+  if (/(tablet|ipad)/.test(text)) return 'tablet';
+  if (/(keyboard|mechanical keyboard)/.test(text)) return 'keyboard';
+  if (/(mouse|gaming mouse)/.test(text)) return 'mouse';
+  if (/(webcam)/.test(text)) return 'webcam';
+  if (/(speaker|soundbar)/.test(text)) return 'speaker';
+  if (/(chair|office chair|ergonomic chair)/.test(text)) return 'chair';
+  if (/(desk|table|study table)/.test(text)) return 'desk';
+  return 'generic';
+}
+
+/**
+ * Returns ordered image sources for a product, ending with a local SVG fallback.
+ */
+function getProductImageSources(product) {
+  const visualType = getProductVisualType(product);
+  const categoryType = PRODUCT_IMAGE_LIBRARY[product?.category] ? product.category : 'generic';
+  const urls = [
+    ...(PRODUCT_IMAGE_LIBRARY[visualType] || []),
+    ...(PRODUCT_IMAGE_LIBRARY[categoryType] || []),
+    ...(PRODUCT_IMAGE_LIBRARY.generic || []),
+  ];
+
+  const uniqueUrls = Array.from(new Set(urls));
+  const label = encodeURIComponent((product?.name || product?.category || 'Product').toUpperCase());
+  uniqueUrls.push(`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+      <rect width="1200" height="800" fill="#192540"/>
+      <rect x="70" y="70" width="1060" height="660" rx="36" fill="#141f38" stroke="#40485d" stroke-width="6"/>
+      <text x="600" y="385" text-anchor="middle" fill="#a3a6ff" font-family="Arial, sans-serif" font-size="44" font-weight="700">${decodeURIComponent(label)}</text>
+      <text x="600" y="445" text-anchor="middle" fill="#dee5ff" font-family="Arial, sans-serif" font-size="24">Image unavailable</text>
+    </svg>
+  `)}`);
+
+  return uniqueUrls;
+}
+
+/**
+ * Returns the preferred product image URL.
+ */
+function getProductImageUrl(product) {
+  return getProductImageSources(product)[0];
+}
+
+/**
+ * Wires image fallback swapping for any rendered product images inside a container.
+ */
+function wireProductImageFallbacks(root = document) {
+  root.querySelectorAll('img[data-product-image]').forEach(img => {
+    let sources = [];
+    try {
+      sources = JSON.parse(img.dataset.productImage || '[]');
+    } catch {
+      sources = [];
+    }
+    if (!sources.length) return;
+
+    let index = Number(img.dataset.imageIndex || 0);
+    img.onerror = () => {
+      index += 1;
+      img.dataset.imageIndex = String(index);
+      if (index < sources.length) {
+        img.src = sources[index];
+      } else {
+        img.onerror = null;
+      }
+    };
+  });
+}
+
+/* ─────────────────────────────────────────────
+   USER HISTORY
+───────────────────────────────────────────── */
+/**
+ * Adds a successful recommendation interaction to local history.
+ */
+function addToHistory(query, topPickName, category) {
+  const history = getHistory();
+  history.unshift({ query, topPickName, category, ts: Date.now() });
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(0, MAX_HISTORY)));
+}
+
+/**
+ * Reads saved interaction history from localStorage.
+ */
+function getHistory() {
+  try {
+    return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+  } catch {
+    return [];
+  }
+}
+
+/* ─────────────────────────────────────────────
+   SAVED PRODUCTS
+───────────────────────────────────────────── */
+/**
+ * Saves a product locally when it is not already bookmarked.
+ */
+function saveProduct(product) {
+  const saved = getSavedProducts();
+  if (!saved.find(p => p.id === product.id)) {
+    saved.unshift(product);
+    localStorage.setItem(SAVED_KEY, JSON.stringify(saved));
+  }
+}
+
+/**
+ * Removes a saved product by id.
+ */
+function removeSavedProduct(productId) {
+  const saved = getSavedProducts().filter(product => product.id !== productId);
+  localStorage.setItem(SAVED_KEY, JSON.stringify(saved));
+}
+
+/**
+ * Returns all saved products from localStorage.
+ */
+function getSavedProducts() {
+  try {
+    return JSON.parse(localStorage.getItem(SAVED_KEY) || '[]');
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Checks whether a product is already saved.
+ */
+function isProductSaved(productId) {
+  return getSavedProducts().some(product => product.id === productId);
 }
 
 /* ─────────────────────────────────────────────

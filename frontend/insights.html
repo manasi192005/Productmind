@@ -337,6 +337,152 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTopNav('insights');
   renderSidebar('insights');
   renderBottomNav('insights');
+
+  function formatCategory(category) {
+    if (!category) return '—';
+    return category.charAt(0).toUpperCase() + category.slice(1);
+  }
+
+  function renderInsights() {
+    const history = getHistory();
+    const saved = getSavedProducts();
+
+    const categoryCounts = {};
+    history.forEach(item => {
+      if (item.category) {
+        categoryCounts[item.category] = (categoryCounts[item.category] || 0) + 1;
+      }
+    });
+
+    const rankedCategories = Object.entries(categoryCounts).sort((a, b) => b[1] - a[1]);
+    const topCategory = rankedCategories[0]?.[0] || '—';
+    const totalSearches = history.length;
+    const totalSaved = saved.length;
+    const recentSearches = history.slice(0, 5);
+    const avgSavedPrice = saved.length
+      ? Math.round(saved.reduce((sum, product) => sum + Number(product.price || 0), 0) / saved.length)
+      : 0;
+
+    const heroSubtitle = document.querySelector('header p.text-on-surface-variant');
+    if (heroSubtitle) {
+      heroSubtitle.textContent = `You have made ${totalSearches} tracked search${totalSearches === 1 ? '' : 'es'}, saved ${totalSaved} product${totalSaved === 1 ? '' : 's'}, and most often explore ${formatCategory(topCategory)}.`;
+    }
+
+    const topGrid = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-12');
+    const topCards = topGrid ? Array.from(topGrid.children) : [];
+
+    if (topCards[0]) {
+      const title = topCards[0].querySelector('h2');
+      const label = topCards[0].querySelector('.text-xs.font-label.uppercase');
+      const chartBars = topCards[0].querySelectorAll('.group\\/chart > div, .h-48.w-full.flex.items-end.gap-1 > div');
+      if (label) label.textContent = 'Priority Insight';
+      if (title) {
+        title.innerHTML = `Your most searched category is <span class="text-gradient">${formatCategory(topCategory)}</span> with ${totalSearches} tracked searches.`;
+      }
+      chartBars.forEach((bar, index) => {
+        const base = recentSearches.length ? 20 + (recentSearches.length * 8) + (index * 6) : 20 + (index * 7);
+        bar.style.height = `${Math.min(100, base)}%`;
+      });
+    }
+
+    if (topCards[1]) {
+      const rows = topCards[1].querySelector('.space-y-4');
+      if (rows) {
+        const displayCategories = rankedCategories.slice(0, 4);
+        rows.innerHTML = displayCategories.length
+          ? displayCategories.map(([category, count]) => `
+              <div class="flex items-center justify-between group cursor-pointer">
+                <span class="text-sm font-medium group-hover:text-primary transition-colors">${formatCategory(category)}</span>
+                <span class="text-xs text-primary bg-primary-dim/10 px-2 py-1 rounded-full">${count} searches</span>
+              </div>
+              <div class="w-full h-[1px] bg-outline-variant/10"></div>
+            `).join('').replace(/<div class="w-full h-\[1px\] bg-outline-variant\/10"><\/div>$/, '')
+          : `<p class="text-sm text-on-surface-variant">Search history will appear here once you start exploring products.</p>`;
+      }
+    }
+
+    if (topCards[2]) {
+      const title = topCards[2].querySelector('h4');
+      const subtitle = topCards[2].querySelector('p.text-sm');
+      const values = topCards[2].querySelectorAll('.w-1');
+      if (title) title.textContent = avgSavedPrice ? `₹${avgSavedPrice.toLocaleString('en-IN')}` : 'No data yet';
+      if (subtitle) subtitle.textContent = avgSavedPrice ? 'Average saved product price' : 'Save products to unlock this view';
+      values.forEach((bar, index) => {
+        bar.style.height = `${16 + (index * 8)}px`;
+      });
+    }
+
+    if (topCards[3]) {
+      const pillContainer = topCards[3].querySelector('.flex.flex-wrap.gap-2');
+      const statValue = topCards[3].querySelector('.hidden.sm\\:block.text-right .text-3xl');
+      const statLabel = topCards[3].querySelector('.hidden.sm\\:block.text-right p');
+      if (pillContainer) {
+        pillContainer.innerHTML = recentSearches.length
+          ? recentSearches.map(item => `<span class="px-4 py-2 bg-surface-container-highest text-on-surface-variant rounded-full text-xs font-medium border border-outline-variant/10">${item.query}</span>`).join('')
+          : `<span class="px-4 py-2 bg-surface-container-highest text-on-surface-variant rounded-full text-xs font-medium border border-outline-variant/10">No recent searches yet</span>`;
+      }
+      if (statValue) statValue.textContent = `${totalSearches}`;
+      if (statLabel) statLabel.textContent = 'Tracked searches';
+    }
+
+    const narrativeCards = document.querySelectorAll('section.mt-16 .grid.grid-cols-1.md\\:grid-cols-3 > div');
+    if (narrativeCards[0]) {
+      const paragraph = narrativeCards[0].querySelector('p');
+      if (paragraph) {
+        paragraph.innerHTML = `You search most often in <span class="text-primary">${formatCategory(topCategory)}</span>, which suggests a strong recurring interest in that category's tradeoffs and feature patterns.`;
+      }
+    }
+    if (narrativeCards[1]) {
+      const paragraph = narrativeCards[1].querySelector('p');
+      if (paragraph) {
+        paragraph.innerHTML = totalSaved
+          ? `You currently have <span class="text-secondary">${totalSaved} saved product${totalSaved === 1 ? '' : 's'}</span>, which means your shortlist is becoming more intentional and curated over time.`
+          : 'You have not saved any products yet, so your shortlist strategy is still wide open and exploratory.';
+      }
+    }
+    if (narrativeCards[2]) {
+      const paragraph = narrativeCards[2].querySelector('p');
+      const lastQuery = recentSearches[0]?.query || '';
+      if (paragraph) {
+        paragraph.innerHTML = lastQuery
+          ? `Your latest search was <span class="text-tertiary">${lastQuery}</span>, which hints at what you are prioritizing right now.`
+          : 'Start searching to let ProductMind surface personalized insights about your current priorities.';
+      }
+    }
+
+    const lowerCards = document.querySelectorAll('section.mt-16.mb-24 > div');
+    if (lowerCards[0]) {
+      const title = lowerCards[0].querySelector('h3');
+      const legend = lowerCards[0].querySelector('.space-y-4');
+      const centerValue = lowerCards[0].querySelector('.text-3xl.font-headline.font-bold');
+      if (title) title.textContent = 'Category Distribution';
+      if (centerValue) {
+        const dominantShare = rankedCategories.length ? Math.round((rankedCategories[0][1] / Math.max(totalSearches, 1)) * 100) : 0;
+        centerValue.textContent = `${dominantShare}%`;
+      }
+      if (legend) {
+        const colors = ['bg-primary', 'bg-secondary', 'bg-tertiary'];
+        legend.innerHTML = rankedCategories.slice(0, 3).map(([category, count], index) => `
+          <div class="flex items-center gap-3">
+            <div class="w-3 h-3 rounded-full ${colors[index] || 'bg-primary'}"></div>
+            <span class="text-sm font-medium">${formatCategory(category)}</span>
+            <span class="ml-auto text-xs text-on-surface-variant">${Math.round((count / Math.max(totalSearches, 1)) * 100)}%</span>
+          </div>
+        `).join('') || `<p class="text-sm text-on-surface-variant">Search distribution will appear here once enough history is available.</p>`;
+      }
+    }
+
+    if (lowerCards[1]) {
+      const title = lowerCards[1].querySelector('h3');
+      const lowValue = lowerCards[1].querySelector('.flex.flex-col .font-headline.font-bold.text-sm');
+      const highValue = lowerCards[1].querySelector('.flex.flex-col.text-right .font-headline.font-bold.text-sm');
+      if (title) title.textContent = 'Activity Pulse';
+      if (lowValue) lowValue.textContent = `${Math.max(0, totalSearches - recentSearches.length)}`;
+      if (highValue) highValue.textContent = `${recentSearches.length}`;
+    }
+  }
+
+  renderInsights();
 });
 </script>
 </body></html>

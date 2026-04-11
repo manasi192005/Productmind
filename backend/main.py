@@ -142,7 +142,8 @@ def recommend(
         result = run_recommendation_agent(
             query=data.query.strip(),
             session_id=data.session_id,
-            history=data.history
+            history=data.history,
+            current_user=current_user,
         )
         logger.info(f"Recommendation done for '{current_user}': top_pick = {result['top_pick']['name']}")
         return result

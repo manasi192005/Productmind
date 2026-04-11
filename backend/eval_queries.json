@@ -1,0 +1,82 @@
+[
+  {
+    "query": "best mobile under 30000",
+    "expected_category": "electronics",
+    "acceptable_top_ids": ["P048", "P047", "P050"]
+  },
+  {
+    "query": "best camera phone under 30000",
+    "expected_category": "electronics",
+    "acceptable_top_ids": ["P047"]
+  },
+  {
+    "query": "best gaming phone under 30000",
+    "expected_category": "electronics",
+    "acceptable_top_ids": ["P048"]
+  },
+  {
+    "query": "best budget phone under 15000",
+    "expected_category": "electronics",
+    "acceptable_top_ids": ["P049", "P046"]
+  },
+  {
+    "query": "best laptop under 50000",
+    "expected_category": "electronics",
+    "acceptable_top_ids": ["P054", "P059", "P055"]
+  },
+  {
+    "query": "best gaming laptop",
+    "expected_category": "electronics",
+    "acceptable_top_ids": ["P057"]
+  },
+  {
+    "query": "best budget headphones under 3000",
+    "expected_category": "audio",
+    "acceptable_top_ids": ["P075", "P006", "P063"]
+  },
+  {
+    "query": "best noise cancelling headphones under 8000",
+    "expected_category": "audio",
+    "acceptable_top_ids": ["P060"]
+  },
+  {
+    "query": "best earphones under 2000",
+    "expected_category": "audio",
+    "acceptable_top_ids": ["P066", "P074", "P073"]
+  },
+  {
+    "query": "best wireless earbuds under 3000",
+    "expected_category": "audio",
+    "acceptable_top_ids": ["P064", "P073", "P074"]
+  },
+  {
+    "query": "best monitor for office under 20000",
+    "expected_category": "electronics",
+    "acceptable_top_ids": ["P071", "P008"]
+  },
+  {
+    "query": "best gaming monitor under 30000",
+    "expected_category": "electronics",
+    "acceptable_top_ids": ["P070", "P007"]
+  },
+  {
+    "query": "best keyboard under 3000",
+    "expected_category": "peripherals",
+    "acceptable_top_ids": ["P010", "P040"]
+  },
+  {
+    "query": "best mechanical keyboard under 6000",
+    "expected_category": "peripherals",
+    "acceptable_top_ids": ["P009"]
+  },
+  {
+    "query": "best ergonomic chair under 6000",
+    "expected_category": "furniture",
+    "acceptable_top_ids": ["P021", "P012"]
+  },
+  {
+    "query": "best study desk under 4000",
+    "expected_category": "furniture",
+    "acceptable_top_ids": ["P029", "P002", "P003"]
+  }
+]
