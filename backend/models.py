@@ -37,6 +37,12 @@ class RecommendRequest(BaseModel):
     session_id: Optional[str] = None
     history: Optional[List[Dict[str, Any]]] = []
 
+class ChatRequest(BaseModel):
+    """Payload for POST /chat"""
+    message: str
+    history: Optional[List[Dict[str, Any]]] = []
+    session_id: Optional[str] = None
+
 class Product(BaseModel):
     """Represents a single product from the dataset"""
     id: str

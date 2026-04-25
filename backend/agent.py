@@ -88,16 +88,11 @@ You will receive:
 
 YOUR TASKS (complete ALL in one response):
 
-1. ANSWER: If the user asked a factual/informational question, answer it clearly first in 2-3 sentences.
+1. ANSWER: Generate a natural, specific, and helpful answer to the user's query. Directly answer the user's question first in 2-3 sentences. Do NOT use generic phrases like 'Based on your query' or 'I recommend'. Tailor the response to the exact user question and intent.
 
-2. SELECT: Choose the single best product from the candidates that matches the user's intent. Use name, price, category, features, and tags for scoring.
+2. SELECT: Choose the single best product from the candidates that matches the user's intent. If the user asked for the "cheapest" or "lowest price", you MUST select the product with the absolute lowest price.
 
-3. EXPLAIN: Write a detailed explanation of at least 120 words covering:
-- Why this product matches the user's specific query
-- Key features and how they serve the use case
-- A real-world scenario where this product excels
-- Value-for-money justification at this price point
-- A brief comparison with the runner-up alternative
+3. EXPLAIN: Write a detailed explanation of at least 120 words covering why this specific product was chosen based on the user's requirements.
 
 4. FOLLOWUPS: Generate exactly 3 follow-up questions to refine the user's intent. Make them specific and useful.
 
@@ -108,13 +103,14 @@ If no history exists, return an empty string.
 
 STRICT RULES:
 - Return ONLY valid JSON. No markdown. No explanation outside JSON.
-- If no product matches perfectly, still pick the closest option and mention the limitation in explanation.
+- If the user asks for the 'cheapest' option, prioritize price above all else in selection.
 - Never recommend products outside the provided candidates list.
 - Never hallucinate product names, prices, or features.
+- Avoid repetitive or template-like language.
 
 REQUIRED OUTPUT FORMAT:
 {
-  "answer": "<direct answer to factual question, or empty string if purely product query>",
+  "answer": "<specific and tailored response to the user's intent>",
   "top_pick_id": "<exact product id from candidates>",
   "explanation": "<minimum 120 word detailed explanation>",
   "followups": ["<question 1>", "<question 2>", "<question 3>"],
@@ -379,13 +375,19 @@ def _score_candidate(product: Dict[str, Any], query_signals: Dict[str, Any]) -> 
     return score
 
 
-def inject_google_links(products: List[Dict]) -> List[Dict]:
-    """Add a Google shopping search link to every product."""
+def inject_product_metadata(products: List[Dict]) -> List[Dict]:
+    """Ensure every product has a search link and valid image URL."""
     enriched = []
     for product in products:
         updated = _clone(product)
-        name = updated.get("name", "").replace(" ", "+")
-        updated["google_link"] = f"https://www.google.com/search?q={name}+buy+online"
+        name_raw = updated.get("name", "")
+        name_encoded = name_raw.replace(" ", "+")
+        updated["google_link"] = f"https://www.google.com/search?q={name_encoded}+buy+online"
+        
+        # Ensure image_url exists
+        if not updated.get("image_url"):
+            updated["image_url"] = f"https://source.unsplash.com/400x300/?{name_encoded}"
+        
         enriched.append(updated)
     return enriched
 
@@ -567,7 +569,7 @@ def fallback_response(query: str, candidates: List[Dict], history: Optional[list
     """Build a valid single-call-style response without using the LLM at all."""
     if not candidates:
         return {
-            "answer": "",
+            "answer": "I couldn't find any products in our catalog that match your specific request. Try broadening your keywords or adjusting your price parameters.",
             "top_pick_id": "no-match",
             "explanation": (
                 "I could not find a strong product match from the current catalog for that request. "
@@ -593,8 +595,16 @@ def fallback_response(query: str, candidates: List[Dict], history: Optional[list
         f"If you want the safest all-round option from the current candidate list, this is the one I would keep at the top. "
         f"{comparison}"
     )
+
+    # Heuristic Answer
+    category = top_pick.get("category", "products")
+    if "cheap" in query or "low" in query or "budget" in query:
+        answer = f"The {top_pick['name']} is the most budget-friendly {category} I found in our current catalog, priced at ₹{top_pick['price']}."
+    else:
+        answer = f"I've selected the {top_pick['name']} because it offers the best combination of features and value for your {category} search."
+
     return {
-        "answer": "",
+        "answer": answer,
         "top_pick_id": top_pick["id"],
         "explanation": explanation,
         "followups": _build_followups(normalize_query(query), top_pick),
@@ -673,12 +683,21 @@ def run_recommendation_agent(
         if query_signals.get("requested_product_type"):
             candidates = tool_product_type_filter(candidates, query_signals["requested_product_type"])
 
-    ranked_candidates = sorted(
-        candidates,
-        key=lambda product: _score_candidate(product, query_signals),
-        reverse=True,
-    )
-    shortlisted = inject_google_links(ranked_candidates[:LLM_CANDIDATE_LIMIT])
+    if query_signals.get("price_order") == "asc":
+        # Strict enforcement for "cheapest" queries
+        ranked_candidates = sorted(
+            candidates,
+            key=lambda product: float(product.get("price", 0) or 0),
+            reverse=False,
+        )
+    else:
+        ranked_candidates = sorted(
+            candidates,
+            key=lambda product: _score_candidate(product, query_signals),
+            reverse=True,
+        )
+    
+    shortlisted = inject_product_metadata(ranked_candidates[:LLM_CANDIDATE_LIMIT])
 
     agent_plan = _build_agent_plan(query_signals, len(shortlisted))
 
@@ -708,7 +727,7 @@ def run_recommendation_agent(
             "agent_plan": [],
             "comparison_data": {"summary": "", "products": []},
             "session_id": session_id,
-            "answer": "",
+            "answer": "I'm sorry, I couldn't find any products in our database that match your search. You might want to try different keywords or a slightly different budget.",
             "followups": [
                 "Would you like to widen the budget slightly?",
                 "Is there a brand or feature you care about most?",

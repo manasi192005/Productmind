@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-
-
 <html class="dark" lang="en">
 
 <head>
@@ -9,9 +7,6 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <link
     href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap"
-    rel="stylesheet" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
     rel="stylesheet" />
   <link
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
@@ -116,258 +111,99 @@
     .nav-blur {
       backdrop-filter: blur(20px);
     }
+
+    /* Chat UI Styles */
+    .chat-bubble-user {
+      background: linear-gradient(135deg, #a3a6ff 0%, #ac8aff 100%);
+      color: #0f00a4;
+      border-radius: 1.5rem 1.5rem 0.25rem 1.5rem;
+      padding: 1rem 1.5rem;
+      max-width: 80%;
+      align-self: flex-end;
+      box-shadow: 0 4px 15px rgba(163, 166, 255, 0.2);
+    }
+
+    .chat-bubble-ai {
+      background: #192540;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(163, 166, 255, 0.1);
+      color: #dee5ff;
+      border-radius: 1.5rem 1.5rem 1.5rem 0.25rem;
+      padding: 1rem 1.5rem;
+      max-width: 80%;
+      align-self: flex-start;
+    }
+
+    #pm-chat-container {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    #pm-chat-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.3s ease-out forwards;
+    }
   </style>
 </head>
 
 <body class="font-body selection:bg-primary selection:text-on-primary">
-  <!-- Top Navigation Mount -->
   <div id="topnav-mount"></div>
-  <main class="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto space-y-24">
-    <!-- Hero Section -->
-    <header class="relative text-center space-y-8">
-      <!-- Decorative Background Orbs -->
-      <div
-        class="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/10 blur-[120px] rounded-full -z-10">
+  <main class="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto space-y-12">
+    <!-- Hero Header -->
+    <header class="relative text-center space-y-4">
+      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/10 blur-[120px] rounded-full -z-10"></div>
+      <h1 class="font-headline font-extrabold text-4xl md:text-6xl tracking-tighter leading-tight">
+        Product<span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Mind</span>
+      </h1>
+      <p class="text-on-surface-variant text-lg max-w-xl mx-auto font-light">
+        Your conversational shopping intelligence.
+      </p>
+    </header>
+
+    <!-- Chat View -->
+    <div class="max-w-4xl mx-auto space-y-8">
+      <div id="pm-chat-container" class="flex flex-col gap-6 min-h-[100px]">
+        <!-- Welcome Message -->
+        <div class="chat-bubble-ai animate-fadeIn">
+          Hello! I'm here to help you find precisely what you need. What are you looking for today?
+        </div>
       </div>
-      <div class="space-y-4">
-        <h1 class="font-headline font-extrabold text-5xl md:text-7xl tracking-tighter leading-tight">
-          Find your <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">perfect
-            product</span>
-        </h1>
-        <p class="text-on-surface-variant text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
-          Experience the ethereal curator. Ask our intelligence to refine your search, compare complexities, and deliver
-          precision recommendations.
-        </p>
-      </div>
-      <!-- AI Command Bar -->
-      <div class="max-w-3xl mx-auto relative group">
-        <div
-          class="bg-surface-container-highest rounded-xl p-2 flex items-center shadow-2xl focus-within:ring-1 ring-secondary/40 transition-all duration-300">
+
+      <!-- Input Section -->
+      <div class="relative group">
+        <div class="bg-surface-container-highest rounded-xl p-2 flex items-center shadow-2xl focus-within:ring-1 ring-secondary/40 transition-all duration-300">
           <input id="pm-search-input"
             class="flex-1 bg-transparent border-none focus:ring-0 px-6 py-4 text-on-surface placeholder:text-on-surface-variant/50 text-lg"
-            placeholder="Describe what you're looking for..." type="text" />
+            placeholder="Type a message..." type="text" />
           <button id="pm-ask-btn"
             class="bg-gradient-primary text-on-primary-fixed px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all glow-primary">
-            <span class="material-symbols-outlined text-xl"
-              style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-            Ask AI
+            <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">send</span>
+            <span>Send</span>
           </button>
         </div>
-        <!-- Ambient shadow glow for input -->
-        <div
-          class="absolute inset-0 bg-secondary/5 blur-xl -z-10 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity">
-        </div>
+        <div class="absolute inset-0 bg-secondary/5 blur-xl -z-10 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity"></div>
       </div>
-      <!-- Suggestion Pills -->
-      <div class="flex flex-wrap justify-center gap-3 mt-8">
-        <button
-          class="pm-pill px-5 py-2 rounded-full bg-secondary-container text-on-secondary-container text-sm font-medium hover:bg-secondary-container/80 transition-colors">Noise-cancelling
-          headphones</button>
-        <button
-          class="pm-pill px-5 py-2 rounded-full bg-secondary-container text-on-secondary-container text-sm font-medium hover:bg-secondary-container/80 transition-colors">4K
-          Mirrorless cameras</button>
-        <button
-          class="pm-pill px-5 py-2 rounded-full bg-secondary-container text-on-secondary-container text-sm font-medium hover:bg-secondary-container/80 transition-colors">Ergonomic
-          office chairs</button>
-        <button
-          class="pm-pill px-5 py-2 rounded-full bg-secondary-container text-on-secondary-container text-sm font-medium hover:bg-secondary-container/80 transition-colors">Mechanical
-          keyboards</button>
-      </div>
-    </header>
-    <!-- Results Section -->
-    <section class="space-y-12">
-      <div class="flex items-end justify-between border-b border-outline-variant/15 pb-6">
-        <div>
-          <h2 class="font-headline text-3xl font-bold tracking-tight">Curated Matches</h2>
-          <p class="text-on-surface-variant font-light mt-1">Based on your preference for "high-fidelity audio and
-            minimalist design"</p>
-        </div>
-        <div class="flex gap-2">
-          <button
-            class="p-2 rounded-full bg-surface-container-high border border-outline-variant/15 hover:bg-surface-container-highest transition-colors">
-            <span class="material-symbols-outlined">filter_list</span>
-          </button>
-        </div>
-      </div>
-      <!-- Asymmetric Bento-style Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Top Pick Card (Large) -->
-        <div
-          class="lg:col-span-2 relative group bg-surface-container-low rounded-lg overflow-hidden flex flex-col md:flex-row shadow-xl">
-          <div class="md:w-1/2 h-80 md:h-full relative overflow-hidden">
-            <img alt="Premium Headphones"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              data-alt="sleek minimalist matte black headphones resting on a dark velvet surface with dramatic rim lighting and soft violet shadows"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWKL-ywH6JGuEIzxOSEpTLTbUNnyyy9Y_baZ7Usz_VLeu6-tinMoCse79lOXuimUlTteaxKli9mX2a4Umoi0QUuvSUW4mU2JbgeKlI9QFILhMQLLJmqghKYhr2vUq_NivDzzbl8m7tKqNk_lz3xAN4eHpFMXs6Q3Ktb3jFBxA4YI2jWczb0ZgRcxq7Igy3hfQ0gGZSuR80tepFXysTwc2NOb37OZXBqpAW3UrYE1KM7DeKDLpjfp-gg1H3trQ5Sn4SXD0lieUnLPo" />
-            <div
-              class="absolute top-4 left-4 bg-primary text-on-primary-fixed px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase">
-              Top Pick</div>
-          </div>
-          <div class="md:w-1/2 p-8 flex flex-col justify-between bg-surface-container-high">
-            <div class="space-y-4">
-              <div class="flex justify-between items-start">
-                <h3 class="text-2xl font-headline font-bold">SonicCore Ultra X1</h3>
-                <span class="text-primary font-bold text-xl">$349</span>
-              </div>
-              <div class="flex gap-2">
-                <span
-                  class="text-xs px-2 py-1 rounded bg-surface-container-highest border border-outline-variant/20 text-on-surface-variant">Active
-                  Noise Cancellation</span>
-                <span
-                  class="text-xs px-2 py-1 rounded bg-surface-container-highest border border-outline-variant/20 text-on-surface-variant">40h
-                  Battery</span>
-              </div>
-              <p class="text-on-surface-variant text-sm leading-relaxed">The pinnacle of acoustic engineering, offering
-                a pure soundstage with industry-leading isolation technology.</p>
-              <!-- AI Insight Box -->
-              <div class="bg-surface-container-low/50 border border-primary/20 rounded-lg p-4 space-y-2">
-                <div class="flex items-center gap-2 text-primary">
-                  <span class="material-symbols-outlined text-sm"
-                    style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-                  <span class="text-xs font-bold uppercase tracking-wider">AI Insight</span>
-                </div>
-                <p class="text-xs text-on-surface italic">"This model matches 98% of your criteria. The flat frequency
-                  response is ideal for the jazz and classical genres you frequently explore."</p>
-              </div>
-            </div>
-            <div class="mt-8 flex gap-4">
-              <button
-                class="flex-1 bg-gradient-primary text-on-primary-fixed py-3 rounded-full font-bold transition-transform active:scale-95">View
-                Details</button>
-              <button
-                class="p-3 rounded-full border border-outline-variant/30 hover:bg-surface-container-highest transition-colors">
-                <span class="material-symbols-outlined">bookmark</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- Secondary Card 1 -->
-        <div
-          class="bg-surface-container-high rounded-lg overflow-hidden group flex flex-col shadow-lg hover:shadow-primary/5 transition-shadow">
-          <div class="h-48 overflow-hidden relative">
-            <img alt="Modern Headphones"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              data-alt="professional studio headphones on a dark oak desk with warm ambient light and blurred bokeh electronics in background"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDj5EEoqVgx9OwtX3cZg87tAdKdV6Bj0DKoZBKDa7yhDa_vOsuyHW9E-i_qfQRPIUz4cnE05WdN90zyKEFXXQVvYsTQAomsJQugxbU9MOwmfV5HrEvWHHd9wTwgJeHBPBLWSB1iqL-cISd2wooXE9oDyKFkN5Mj3nNLh1M7yOsNM3o2pGYGKrfbNJLJVF16CJZ3ASagUm8BHG3KfdZ8xPPA-I0Opia8W7yqc_fgUYqmyOV-5ZY4vKx0cSmZCeBkk7QTUsKqsJWSOIE" />
-          </div>
-          <div class="p-6 flex-1 flex flex-col justify-between">
-            <div class="space-y-3">
-              <div class="flex justify-between items-center">
-                <h3 class="font-headline font-bold">Zenith Flow Wireless</h3>
-                <span class="text-secondary-dim font-bold">$229</span>
-              </div>
-              <p class="text-on-surface-variant text-xs leading-relaxed">Lightweight frame and memory foam cushions
-                designed for all-day studio sessions.</p>
-              <div class="pt-2 flex items-start gap-2">
-                <span class="material-symbols-outlined text-primary-dim text-base">psychology</span>
-                <p class="text-[10px] text-primary-dim/80 font-medium uppercase tracking-tight">Best for long-duration
-                  wear</p>
-              </div>
-            </div>
-            <button
-              class="mt-6 w-full py-2 rounded-full border border-outline-variant/20 hover:bg-surface-container-highest text-sm font-bold transition-colors">Compare</button>
-          </div>
-        </div>
-        <!-- Secondary Card 2 -->
-        <div class="bg-surface-container-high rounded-lg overflow-hidden group flex flex-col shadow-lg">
-          <div class="h-48 overflow-hidden relative">
-            <img alt="Minimalist Headphones"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              data-alt="close up of silver metallic headphones with white leather cups in a brightly lit clean futuristic aesthetic"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkKJ04KoY2y2huwz8ygfR9kfMq-DTjTd5XtQpdHpFuXnaX5gxhwjkQ_GkZ4Hy3Wf0ETjkFuzE8Qohe3zxYGgAOAq38yksBXZ8dt1NXQwTYgedrCKQS3j8r20pNmwM3SDIC7u3oEPgPyhjisJaH7ZFdrZw738FKZzEBXYcGZ70f91G4Y5XDWaOeXtpaFLPOXT1_AJiJ6-hE1HpMdIIELyAsQJIaU5NH8xqtqW4tcej18nmQtMAKwBuniqFLlYCe298ZPqs41h4QPlg" />
-          </div>
-          <div class="p-6 flex-1 flex flex-col justify-between">
-            <div class="space-y-3">
-              <div class="flex justify-between items-center">
-                <h3 class="font-headline font-bold">Aura Pure S2</h3>
-                <span class="text-secondary-dim font-bold">$189</span>
-              </div>
-              <p class="text-on-surface-variant text-xs leading-relaxed">Sustainable materials paired with
-                high-efficiency drivers for the eco-conscious audiophile.</p>
-              <div class="pt-2 flex items-start gap-2">
-                <span class="material-symbols-outlined text-primary-dim text-base">psychology</span>
-                <p class="text-[10px] text-primary-dim/80 font-medium uppercase tracking-tight">Highest value for price
-                </p>
-              </div>
-            </div>
-            <button
-              class="mt-6 w-full py-2 rounded-full border border-outline-variant/20 hover:bg-surface-container-highest text-sm font-bold transition-colors">Compare</button>
-          </div>
-        </div>
-        <!-- Secondary Card 3 -->
-        <div class="bg-surface-container-high rounded-lg overflow-hidden group flex flex-col shadow-lg">
-          <div class="h-48 overflow-hidden relative">
-            <img alt="Classic Headphones"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              data-alt="retro style wooden and leather headphones on a marble stand with soft golden hour light"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFhmZcKni2jyUaLRDejeZCKaS19-crvhfUsxvZpL-dSR8FKLblNbeDvb0NOZh_HCu0q0q0Sp6t1m-jxGFiA5duyJlv1F7I3N68GHTz6iXTW40sGtuc0jCsJNf6HKj6fPhvgiZth744KSusdf9FJWZ6IU157HuiufX-ZfX4m8wO7rdCcMyMEXaNj9z1BggWooza96DWMFpcDRdcZrFPYQHcJtoG0xLmPjHIp6bM5XEqkqLxDumn2Dzyb20TsxVGfExxLibt6Y05RtQ" />
-          </div>
-          <div class="p-6 flex-1 flex flex-col justify-between">
-            <div class="space-y-3">
-              <div class="flex justify-between items-center">
-                <h3 class="font-headline font-bold">Heritage H-Vibe</h3>
-                <span class="text-secondary-dim font-bold">$410</span>
-              </div>
-              <p class="text-on-surface-variant text-xs leading-relaxed">Handcrafted walnut housing providing a warm,
-                analog-like sound signature.</p>
-              <div class="pt-2 flex items-start gap-2">
-                <span class="material-symbols-outlined text-primary-dim text-base">psychology</span>
-                <p class="text-[10px] text-primary-dim/80 font-medium uppercase tracking-tight">Premium materials choice
-                </p>
-              </div>
-            </div>
-            <button
-              class="mt-6 w-full py-2 rounded-full border border-outline-variant/20 hover:bg-surface-container-highest text-sm font-bold transition-colors">Compare</button>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Refinement Section -->
-    <section
-      class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-surface-container-low rounded-lg p-12 overflow-hidden relative">
-      <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-secondary/5 blur-[80px] rounded-full -z-10"></div>
-      <div class="space-y-6">
-        <h2 class="font-headline text-4xl font-extrabold tracking-tight">Refine with Context</h2>
-        <p class="text-on-surface-variant leading-relaxed">Our curator understands nuance. Tell us about your
-          environment or use-case to narrow down the selection further.</p>
-        <div class="space-y-4">
-          <div
-            class="flex items-center gap-4 bg-surface-container-high p-4 rounded-xl border border-outline-variant/10 hover:border-primary/30 transition-all cursor-pointer group">
-            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-              <span class="material-symbols-outlined">train</span>
-            </div>
-            <div class="flex-1">
-              <h4 class="font-bold">Commuting &amp; Travel</h4>
-              <p class="text-xs text-on-surface-variant">Prioritize active noise cancellation and portability.</p>
-            </div>
-            <span
-              class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
-          </div>
-          <div
-            class="flex items-center gap-4 bg-surface-container-high p-4 rounded-xl border border-outline-variant/10 hover:border-primary/30 transition-all cursor-pointer group">
-            <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
-              <span class="material-symbols-outlined">laptop_mac</span>
-            </div>
-            <div class="flex-1">
-              <h4 class="font-bold">Deep Work &amp; Focus</h4>
-              <p class="text-xs text-on-surface-variant">Focus on comfort and long-term wearing fatigue.</p>
-            </div>
-            <span
-              class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
-          </div>
-        </div>
-      </div>
-      <div class="relative h-[400px] hidden md:block">
-        <div class="absolute inset-0 bg-gradient-to-tr from-surface-container-low to-transparent z-10"></div>
-        <img alt="Tech setup" class="w-full h-full object-cover rounded-lg"
-          data-alt="clean minimal workstation with curved monitor, mechanical keyboard, and premium headphones glowing in soft blue neon light"
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvF5ZM9UpBx73Esc20c2QctXJP009B-grAPU9wJeTKr6WiGMrkgNE3JOB5Z69xHLUI0hmM9CsNENxnzHnFnwgrp_ObaNwV0T4ig5tBd_H6oLp742RJxYxLxGw8uX0KHkoqGADqEVLs9Pmzo3IJ3ovyxelWUFZ5hwCkkNNwA5HWu0YWLb6Bv13H4haK-REMHM94Gf7LNjPC4A4upc-Mw62sTInG9ShCyBYeTfkPhOA50CEXBZDjnJ7C1TruC_3YdQ4cwe3kl5vZ2Mw" />
-      </div>
-    </section>
-  </main>
-  <!-- Bottom Nav Mount (Mobile) -->
-  <div id="bottomnav-mount"></div>
 
+      <!-- Quick Actions -->
+      <div class="flex flex-wrap justify-center gap-3">
+        <button class="pm-pill px-5 py-2 rounded-full bg-secondary-container text-on-secondary-container text-xs font-medium hover:bg-secondary-container/80 transition-colors">Noise-cancelling headphones</button>
+        <button class="pm-pill px-5 py-2 rounded-full bg-secondary-container text-on-secondary-container text-xs font-medium hover:bg-secondary-container/80 transition-colors">Ergonomic office chairs</button>
+        <button class="pm-pill px-5 py-2 rounded-full bg-secondary-container text-on-secondary-container text-xs font-medium hover:bg-secondary-container/80 transition-colors">Mechanical keyboards</button>
+      </div>
+    </div>
+
+    <!-- Results Display (Dynamic) -->
+    <div id="pm-results-container"></div>
+  </main>
+
+  <div id="bottomnav-mount"></div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -377,14 +213,31 @@
 
       const input = document.getElementById('pm-search-input');
       const askBtn = document.getElementById('pm-ask-btn');
+      const chatContainer = document.getElementById('pm-chat-container');
+      const resultsContainer = document.getElementById('pm-results-container');
 
-      const last = getLastQuery();
-      if (last) input.value = last;
+      let chatHistory = getHistory().map(h => ({ role: h.role || 'user', content: h.query || h.content }));
+
+      // Restore last state
+      const lastQuery = getLastQuery();
+      const lastResults = getLastResults();
+      if (lastQuery && lastResults) {
+        addMessage('user', lastQuery, false);
+        renderResults(lastResults);
+      }
+
+      function addMessage(role, content, animate = true) {
+        const div = document.createElement('div');
+        div.className = `chat-bubble-${role === 'user' ? 'user' : 'ai'} ${animate ? 'animate-fadeIn' : ''}`;
+        div.innerHTML = content;
+        chatContainer.appendChild(div);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
 
       function googleLinkForProduct(product) {
         if (product.google_link) return product.google_link;
-        const keyword = encodeURIComponent(`${product.name || 'product'} buy online`);
-        return `https://www.google.com/search?q=${keyword}`;
+        const q = `${product.name} ${product.brand || ''} ${product.category || ''}`.trim();
+        return `https://www.google.com/search?q=${encodeURIComponent(q + ' buy online')}`;
       }
 
       function encodeProduct(product) {
@@ -392,286 +245,190 @@
       }
 
       function decodeProduct(serialized) {
-        try {
-          return JSON.parse(decodeURIComponent(serialized));
-        } catch {
-          return null;
-        }
+        try { return JSON.parse(decodeURIComponent(serialized)); } catch { return null; }
       }
 
-      function getResultsSection() {
-        let sec = document.getElementById('pm-results-section');
-        if (!sec) {
-          sec = document.createElement('section');
-          sec.id = 'pm-results-section';
-          sec.className = 'space-y-10 animate-fade-in';
-          const main = document.querySelector('main');
-          const hero = main.querySelector('header');
-          hero.insertAdjacentElement('afterend', sec);
-        }
-        return sec;
-      }
+      async function handleChat() {
+        const msg = input.value.trim();
+        if (!msg) return;
 
-      function showResultsLoading() {
-        const sec = getResultsSection();
-        sec.innerHTML = `
-      <div class="flex flex-col items-center justify-center py-16 gap-4 text-on-surface-variant">
-        <div class="w-12 h-12 rounded-full border-4 border-primary/30 border-t-primary animate-spin"></div>
-        <p class="font-label text-sm uppercase tracking-widest">Consulting the intelligence...</p>
-      </div>`;
-      }
+        input.value = '';
+        addMessage('user', msg);
+        saveQuery(msg);
 
-      function showResultsError(msg) {
-        const sec = getResultsSection();
-        sec.innerHTML = `
-      <div class="flex items-center gap-3 bg-error-container/20 border border-error/20 p-5 rounded-xl">
-        <span class="material-symbols-outlined text-error">error</span>
-        <div>
-          <p class="font-bold text-error text-sm">Recommendation Failed</p>
-          <p class="text-on-surface-variant text-xs mt-1">${msg}</p>
-        </div>
-      </div>`;
-      }
-
-      async function handleAsk() {
-        const q = input.value.trim();
-        if (!q) return;
-        saveQuery(q);
-
-        askBtn.innerHTML = '<span class="material-symbols-outlined text-xl" style="font-variation-settings:\'FILL\' 1;animation:spin 1s linear infinite">autorenew</span>&nbsp;Processing...';
         askBtn.disabled = true;
-        showResultsLoading();
+        askBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">autorenew</span>';
 
         try {
-          const data = await apiRecommend(q, getHistory().slice(0, 5));
-          addToHistory(q, data.top_pick?.name, data.top_pick?.category);
+          // Use the new /chat endpoint
+          const token = localStorage.getItem('pm_auth_token');
+          const res = await fetch('http://localhost:8000/chat', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              message: msg,
+              history: chatHistory.slice(-10)
+            })
+          });
+
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.detail || 'Chat failed');
+
+          chatHistory.push({ role: 'user', content: msg });
+          chatHistory.push({ role: 'assistant', content: data.answer || data.explanation.substring(0, 100) + '...' });
+          
+          saveResults(data);
+          addToHistory(msg, data.top_pick?.name, data.top_pick?.category);
+          
+          // Sync with Compare page
+          const allProds = [data.top_pick, ...(data.alternatives || [])].filter(p => p && p.id !== 'no-match');
+          localStorage.setItem("comparisonProducts", JSON.stringify(allProds));
+          localStorage.setItem("comparisonMeta", JSON.stringify(data.comparison_data || {}));
+          
+          if (data.answer) {
+            addMessage('ai', data.answer);
+          }
+          
           renderResults(data);
         } catch (err) {
-          showResultsError(err.message);
+          addMessage('ai', `<span class="text-error">Error: ${err.message}</span>`);
         } finally {
-          askBtn.innerHTML = '<span class="material-symbols-outlined text-xl" style="font-variation-settings:\'FILL\' 1;">auto_awesome</span>&nbsp;Ask AI';
           askBtn.disabled = false;
+          askBtn.innerHTML = '<span class="material-symbols-outlined" style="font-variation-settings: \'FILL\' 1;">send</span><span>Send</span>';
         }
       }
 
-      const debouncedAsk = debounce(handleAsk, 500);
-      askBtn.addEventListener('click', debouncedAsk);
-      input.addEventListener('keydown', e => { if (e.key === 'Enter') debouncedAsk(); });
+      askBtn.addEventListener('click', handleChat);
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') handleChat(); });
 
       document.querySelectorAll('.pm-pill').forEach(pill => {
         pill.addEventListener('click', () => {
           input.value = pill.textContent.trim();
-          input.focus();
-          handleAsk();
+          handleChat();
         });
       });
 
       window.toggleSave = function toggleSave(product) {
         if (!product) return;
+        const btn = document.getElementById(`save-btn-${product.id}`);
+        const icon = btn ? btn.querySelector('.material-symbols-outlined') : null;
         if (isProductSaved(product.id)) {
           removeSavedProduct(product.id);
+          if (icon) icon.style = "";
         } else {
           saveProduct(product);
-        }
-        const icon = document.querySelector(`#save-btn-${product.id} .material-symbols-outlined`);
-        if (icon) {
-          icon.style = isProductSaved(product.id) ? "font-variation-settings:'FILL' 1;" : '';
+          if (icon) icon.style = "font-variation-settings:'FILL' 1;";
         }
       };
 
       function renderResults(data) {
-        const sec = getResultsSection();
+        resultsContainer.innerHTML = '';
         const top = data.top_pick || {};
         const alts = data.alternatives || [];
-        const prefs = data.extracted_preferences || {};
         const followups = data.followups || [];
-        const comparisonText = data.comparison || '';
-        const insight = data.insight || '';
-        const answer = data.answer || '';
 
-        localStorage.setItem("comparisonProducts", JSON.stringify([
-          data.top_pick,
-          ...(data.alternatives ? data.alternatives.slice(0, 2) : [])
-        ]));
-        localStorage.setItem("comparisonMeta", JSON.stringify(data.comparison_data || {}));
+        const section = document.createElement('section');
+        section.className = 'space-y-10 animate-fadeIn';
+        
+        const prefChips = (data.extracted_preferences?.keywords || []).slice(0, 3).map(k => `
+          <span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">🔍 ${k}</span>
+        `).join('');
 
-        const prefChips = [
-          prefs.category && `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">📂 ${prefs.category}</span>`,
-          prefs.max_price && `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">💸 Under ₹${Number(prefs.max_price).toLocaleString('en-IN')}</span>`,
-          prefs.intent && `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">🧠 ${prefs.intent}</span>`,
-          ...(prefs.keywords || []).slice(0, 3).map(keyword => `<span class="px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-xs text-on-surface-variant">🔍 ${keyword}</span>`),
-        ].filter(Boolean).join('');
-
-        const altCards = alts.map(product => `
-      <div class="bg-surface-container-high rounded-xl overflow-hidden flex flex-col shadow-lg group hover:shadow-primary/10 transition-shadow">
-        <div class="h-44 overflow-hidden">
-          <img
-            src="${getProductImageUrl(product)}"
-            alt="${product.name}"
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            data-product-image='${JSON.stringify(getProductImageSources(product))}'
-            data-image-index="0"
-          />
-        </div>
-        <div class="p-6 flex-1 flex flex-col gap-3">
-          <div class="flex justify-between items-start gap-3">
-            <h4 class="font-headline font-bold text-on-surface">${product.name}</h4>
-            <span class="text-secondary font-bold text-lg">₹${Number(product.price || 0).toLocaleString('en-IN')}</span>
-          </div>
-          <span class="text-[10px] uppercase tracking-widest text-primary/60 bg-primary/10 px-2 py-0.5 rounded-full w-fit">${product.category || ''}</span>
-          <p class="text-on-surface-variant text-xs leading-relaxed">${(product.features || []).slice(0, 3).join(' · ')}</p>
-          <div class="flex flex-wrap gap-1 mt-1">
-            ${(product.tags || []).slice(0, 3).map(tag => `<span class="text-[10px] px-2 py-0.5 bg-surface-container-highest text-outline rounded-full">${tag}</span>`).join('')}
-          </div>
-          <div class="mt-auto flex gap-3 pt-3">
-            <a href="${googleLinkForProduct(product)}" target="_blank" rel="noopener" class="flex-1 py-2 rounded-full bg-gradient-primary text-on-primary-fixed text-sm font-bold text-center">View Product</a>
-            <button class="pm-save-btn p-3 rounded-full border border-outline-variant/30 hover:bg-surface-container-highest transition-colors" id="save-btn-${product.id}" data-product="${encodeProduct(product)}">
-              <span class="material-symbols-outlined" style="${isProductSaved(product.id) ? "font-variation-settings:'FILL' 1;" : ''}">bookmark</span>
-            </button>
-          </div>
-        </div>
-      </div>`).join('');
-
-        sec.innerHTML = `
-      <div class="flex items-end justify-between border-b border-outline-variant/15 pb-6">
-        <div>
-          <h2 class="font-headline text-3xl font-bold tracking-tight">AI Recommendations</h2>
-          <p class="text-on-surface-variant font-light mt-1">Based on your query: "<span class="text-primary">${input.value}</span>"</p>
-        </div>
-      </div>
-
-      ${answer ? `
-      <div class="bg-surface-container-low rounded-xl p-5 border border-tertiary/20 mb-4">
-        <div class="flex items-center gap-2 text-tertiary mb-2">
-          <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">help</span>
-          <span class="text-xs font-bold uppercase tracking-wider">Direct Answer</span>
-        </div>
-        <p class="text-sm text-on-surface leading-relaxed">${answer}</p>
-      </div>` : ''}
-
-      ${prefChips ? `
-      <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/10">
-        <p class="text-xs font-label text-on-surface-variant uppercase tracking-widest mb-3">What the AI understood</p>
-        <div class="flex flex-wrap gap-2">${prefChips}</div>
-      </div>` : ''}
-
-      <div class="relative group bg-surface-container-low rounded-xl overflow-hidden shadow-2xl border border-primary/10">
-        <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none"></div>
-        <div class="grid grid-cols-1 md:grid-cols-2">
-          <div class="relative min-h-[280px]">
-            <img
-              src="${getProductImageUrl(top)}"
-              alt="${top.name || 'Product'}"
-              class="w-full h-full object-cover"
-              data-product-image='${JSON.stringify(getProductImageSources(top))}'
-              data-image-index="0"
-            />
-            <div class="absolute top-4 left-4 z-10 bg-primary text-on-primary-fixed px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase">Top Pick</div>
-          </div>
-          <div class="relative z-10 p-8 flex flex-col gap-5">
-            <div class="flex justify-between items-start flex-wrap gap-3">
-              <div>
-                <h3 class="text-2xl font-headline font-bold text-on-surface">${top.name || 'No product found'}</h3>
-                <span class="text-xs text-primary/70 uppercase tracking-widest">${top.brand || 'N/A'} · ${top.category || 'N/A'}</span>
+        section.innerHTML = `
+          <div class="flex items-center gap-2 mb-4">${prefChips}</div>
+          
+          <!-- Top Pick -->
+          <div class="bg-surface-container-low rounded-xl overflow-hidden shadow-2xl border border-primary/10 grid grid-cols-1 md:grid-cols-2">
+            <div class="h-64 md:h-auto overflow-hidden">
+              <img src="${getProductImageUrl(top)}" 
+                   class="w-full h-full object-cover" 
+                   data-product-image='${JSON.stringify(getProductImageSources(top))}'
+                   data-image-index="0">
+            </div>
+            <div class="p-8 flex flex-col gap-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="text-2xl font-headline font-bold">${top.name}</h3>
+                  <p class="text-xs text-primary/70 uppercase tracking-widest">${top.brand} · ${top.category}</p>
+                </div>
+                <span class="text-2xl font-bold text-primary">₹${Number(top.price).toLocaleString('en-IN')}</span>
               </div>
-              <span class="text-3xl font-headline font-bold text-primary">₹${Number(top.price || 0).toLocaleString('en-IN')}</span>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              ${(top.features || []).map(feature => `<span class="text-xs px-3 py-1 rounded-full bg-surface-container-highest border border-outline-variant/20 text-on-surface-variant">${feature}</span>`).join('')}
-            </div>
-            <div class="bg-surface-container/60 border border-primary/20 rounded-xl p-5 space-y-2">
-              <div class="flex items-center gap-2 text-primary">
-                <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1;">auto_awesome</span>
-                <span class="text-xs font-bold uppercase tracking-wider">AI Reasoning</span>
+              <p class="text-sm text-on-surface-variant leading-relaxed italic">"${data.explanation}"</p>
+              
+              <!-- Key Details Box -->
+              <div class="bg-surface-container-highest/40 border border-outline-variant/20 rounded-xl p-5 space-y-3">
+                <h4 class="text-xs font-bold uppercase tracking-widest text-primary">Key Details</h4>
+                <ul class="text-xs space-y-1 text-on-surface-variant">
+                  <li><span class="opacity-60">• Price:</span> ₹${Number(top.price).toLocaleString('en-IN')}</li>
+                  <li><span class="opacity-60">• Brand:</span> ${top.brand}</li>
+                  <li><span class="opacity-60">• Category:</span> ${top.category}</li>
+                  <li><span class="opacity-60">• Features:</span> ${(top.features || []).slice(0, 3).join(', ')}</li>
+                </ul>
               </div>
-              <p class="text-sm text-on-surface leading-relaxed italic" id="pm-ai-explanation"></p>
-            </div>
-            ${insight ? `
-            <div class="bg-surface-container/60 border border-secondary/20 rounded-xl p-5 space-y-2">
-              <div class="flex items-center gap-2 text-secondary">
-                <span class="material-symbols-outlined text-sm">insights</span>
-                <span class="text-xs font-bold uppercase tracking-wider">Personal Insight</span>
+
+              ${data.insight ? `
+              <div class="bg-surface-container/60 border border-secondary/20 rounded-xl p-4 space-y-2">
+                <div class="flex items-center gap-2 text-secondary">
+                  <span class="material-symbols-outlined text-sm">insights</span>
+                  <span class="text-xs font-bold uppercase tracking-wider">Personal Insight</span>
+                </div>
+                <p class="text-[11px] text-on-surface leading-relaxed">${data.insight}</p>
+              </div>` : ''}
+              <div class="mt-auto flex gap-4">
+                <a href="${googleLinkForProduct(top)}" target="_blank" class="flex-1 bg-gradient-primary text-on-primary-fixed py-3 rounded-full font-bold text-center">View Product</a>
+                <button class="p-3 rounded-full border border-outline-variant/30 hover:bg-surface-container-highest" id="save-btn-${top.id}" onclick='toggleSave(${JSON.stringify(top).replace(/'/g, "&apos;")})'>
+                  <span class="material-symbols-outlined" style="${isProductSaved(top.id) ? "font-variation-settings:'FILL' 1;" : ''}">bookmark</span>
+                </button>
               </div>
-              <p class="text-sm text-on-surface leading-relaxed">${insight}</p>
-            </div>` : ''}
-            <div class="mt-auto flex gap-4">
-              <a href="${googleLinkForProduct(top)}" target="_blank" rel="noopener" class="flex-1 bg-gradient-primary text-on-primary-fixed py-3 rounded-full font-bold transition-transform active:scale-95 text-center">
-                View Product
-              </a>
-              <button class="pm-save-btn p-3 rounded-full border border-outline-variant/30 hover:bg-surface-container-highest transition-colors" id="save-btn-${top.id}" data-product="${encodeProduct(top)}">
-                <span class="material-symbols-outlined" style="${isProductSaved(top.id) ? "font-variation-settings:'FILL' 1;" : ''}">bookmark</span>
-              </button>
             </div>
           </div>
-        </div>
-      </div>
 
-      ${comparisonText ? `
-      <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/10">
-        <div class="flex items-center gap-2 text-secondary mb-2">
-          <span class="material-symbols-outlined text-sm">compare_arrows</span>
-          <span class="text-xs font-bold uppercase tracking-wider">Comparison Summary</span>
-        </div>
-        <p class="text-sm text-on-surface leading-relaxed">${comparisonText}</p>
-      </div>` : ''}
+          <!-- Alternatives -->
+          ${alts.length ? `
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            ${alts.map(p => `
+              <div class="bg-surface-container-high rounded-xl overflow-hidden shadow-lg flex flex-col">
+                <div class="h-40 overflow-hidden">
+                  <img src="${getProductImageUrl(p)}" 
+                       class="w-full h-full object-cover"
+                       data-product-image='${JSON.stringify(getProductImageSources(p))}'
+                       data-image-index="0">
+                </div>
+                <div class="p-5 flex-1 flex flex-col gap-2">
+                  <h4 class="font-bold text-sm text-on-surface">${p.name}</h4>
+                  <p class="text-primary font-bold">₹${Number(p.price).toLocaleString('en-IN')}</p>
+                  <p class="text-[10px] text-on-surface-variant line-clamp-2">${p.features.join(' · ')}</p>
+                  <div class="mt-auto pt-3 flex gap-2">
+                    <a href="${googleLinkForProduct(p)}" target="_blank" class="flex-1 py-2 bg-surface-container-highest text-center rounded-full text-xs font-bold">View</a>
+                    <button class="p-2 rounded-full border border-outline-variant/30 hover:bg-surface-container-highest" id="save-btn-${p.id}" onclick='toggleSave(${JSON.stringify(p).replace(/'/g, "&apos;")})'>
+                      <span class="material-symbols-outlined text-xs" style="${isProductSaved(p.id) ? "font-variation-settings:'FILL' 1;" : ''}">bookmark</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>` : ''}
 
-      ${followups.length ? `
-      <div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/10">
-        <p class="text-xs font-label text-on-surface-variant uppercase tracking-widest mb-3">Refine your search</p>
-        <div class="flex flex-wrap gap-2">
-          ${followups.map(question => `
-            <button class="pm-followup-pill px-4 py-2 rounded-full bg-secondary-container text-on-secondary-container text-sm hover:bg-secondary-container/80 transition-colors" data-question="${encodeURIComponent(question)}">
-              ${question}
-            </button>`).join('')}
-        </div>
-      </div>` : ''}
-
-      ${alts.length ? `
-      <div>
-        <h3 class="font-headline text-xl font-bold tracking-tight mb-5">Alternatives</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${altCards}</div>
-      </div>` : ''}
-    `;
-
-        sec.querySelectorAll('.pm-save-btn').forEach(button => {
-          button.addEventListener('click', () => {
-            const product = decodeProduct(button.dataset.product || '');
-            window.toggleSave(product);
-          });
-        });
-
-        sec.querySelectorAll('.pm-followup-pill').forEach(button => {
-          button.addEventListener('click', () => {
-            input.value = decodeURIComponent(button.dataset.question || '');
-            input.focus();
-            handleAsk();
-          });
-        });
-
-        wireProductImageFallbacks(sec);
-
-        const explElement = document.getElementById('pm-ai-explanation');
-        if (explElement && data.explanation) {
-          const words = data.explanation.split(' ');
-          let index = 0;
-          explElement.innerHTML = '"';
-          const timer = setInterval(() => {
-            if (index < words.length) {
-              explElement.innerHTML += `${words[index]} `;
-              index += 1;
-            } else {
-              explElement.innerHTML = `${explElement.innerHTML.trim()}"`;
-              clearInterval(timer);
-            }
-          }, 25);
-        }
+          <!-- Followups -->
+          <div class="flex flex-wrap gap-2 pt-4">
+            ${followups.map(f => `
+              <button class="px-4 py-2 rounded-full bg-secondary-container/30 text-on-secondary-container text-xs hover:bg-secondary-container/50 transition-colors" onclick="document.getElementById('pm-search-input').value='${f}'; document.getElementById('pm-ask-btn').click()">${f}</button>
+            `).join('')}
+          </div>
+        `;
+        
+        resultsContainer.appendChild(section);
+        wireProductImageFallbacks(section);
+        resultsContainer.scrollIntoView({ behavior: 'smooth' });
       }
 
       const spinStyle = document.createElement('style');
-      spinStyle.textContent = `@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`;
+      spinStyle.textContent = `@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } } .animate-spin { animation: spin 1s linear infinite; }`;
       document.head.appendChild(spinStyle);
     });
   </script>
 </body>
-
 </html>

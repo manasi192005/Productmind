@@ -31,6 +31,7 @@ from models import (
     TokenResponse,
     RecommendRequest,
     RecommendResponse,
+    ChatRequest,
 )
 
 # ─── LOGGING SETUP ───────────────────────────────────────────────────────────
@@ -154,3 +155,36 @@ def recommend(
     except Exception as e:
         logger.error(f"Recommendation error for '{current_user}': {e}", exc_info=True)
         raise HTTPException(status_code=500, detail="Something went wrong while generating recommendations. Please try again.")
+
+
+@app.post("/chat", tags=["AI"])
+def chat(
+    data: ChatRequest,
+    current_user: str = Depends(get_current_user),   # Protected route
+):
+    """
+    Conversational AI chat interface.
+    1. Answers informational questions
+    2. Provides product recommendations based on conversation
+    """
+    logger.info(f"Chat request from '{current_user}': '{data.message}'")
+
+    if not data.message or len(data.message.strip()) < 2:
+        raise HTTPException(status_code=400, detail="Message is too short.")
+
+    try:
+        # We reuse the agent logic which already handles conversational context
+        result = run_recommendation_agent(
+            query=data.message.strip(),
+            session_id=data.session_id,
+            history=data.history,
+            current_user=current_user,
+        )
+        logger.info(f"Chat response done for '{current_user}'")
+        return result
+
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail=str(e))
+    except Exception as e:
+        logger.error(f"Chat error for '{current_user}': {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Something went wrong. Please try again.")

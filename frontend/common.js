@@ -12,6 +12,7 @@ const QUERY_KEY = 'pm_last_query';
 const HISTORY_KEY = 'pm_user_history';
 const MAX_HISTORY = 20;
 const SAVED_KEY = 'pm_saved_products';
+const RESULTS_KEY = 'pm_last_results';
 const API_BASE = 'http://localhost:8000';  // FastAPI backend URL
 
 const PAGES = {
@@ -196,6 +197,24 @@ function getLastQuery() {
   return localStorage.getItem(QUERY_KEY) || '';
 }
 
+function saveResults(results) {
+  if (results) localStorage.setItem(RESULTS_KEY, JSON.stringify(results));
+}
+
+function getLastResults() {
+  try {
+    const raw = localStorage.getItem(RESULTS_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function clearSearchPersistence() {
+  localStorage.removeItem(QUERY_KEY);
+  localStorage.removeItem(RESULTS_KEY);
+}
+
 /* ─────────────────────────────────────────────
    PRODUCT IMAGES
 ───────────────────────────────────────────── */
@@ -226,36 +245,24 @@ function getProductVisualType(product) {
 }
 
 /**
- * Returns ordered image sources for a product, ending with a local SVG fallback.
- */
-function getProductImageSources(product) {
-  const visualType = getProductVisualType(product);
-  const categoryType = PRODUCT_IMAGE_LIBRARY[product?.category] ? product.category : 'generic';
-  const urls = [
-    ...(PRODUCT_IMAGE_LIBRARY[visualType] || []),
-    ...(PRODUCT_IMAGE_LIBRARY[categoryType] || []),
-    ...(PRODUCT_IMAGE_LIBRARY.generic || []),
-  ];
-
-  const uniqueUrls = Array.from(new Set(urls));
-  const label = encodeURIComponent((product?.name || product?.category || 'Product').toUpperCase());
-  uniqueUrls.push(`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-    <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
-      <rect width="1200" height="800" fill="#192540"/>
-      <rect x="70" y="70" width="1060" height="660" rx="36" fill="#141f38" stroke="#40485d" stroke-width="6"/>
-      <text x="600" y="385" text-anchor="middle" fill="#a3a6ff" font-family="Arial, sans-serif" font-size="44" font-weight="700">${decodeURIComponent(label)}</text>
-      <text x="600" y="445" text-anchor="middle" fill="#dee5ff" font-family="Arial, sans-serif" font-size="24">Image unavailable</text>
-    </svg>
-  `)}`);
-
-  return uniqueUrls;
-}
-
-/**
  * Returns the preferred product image URL.
  */
 function getProductImageUrl(product) {
-  return getProductImageSources(product)[0];
+  if (product && product.image_url) return product.image_url;
+  const name = product?.name || product?.category || 'product';
+  return `https://source.unsplash.com/400x300/?${encodeURIComponent(name)}`;
+}
+
+/**
+ * Enhanced image sources with fallbacks.
+ */
+function getProductImageSources(product) {
+  const name = product?.name || product?.category || 'product';
+  const url = product?.image_url || `https://source.unsplash.com/400x300/?${encodeURIComponent(name)}`;
+  return [
+    url,
+    `https://via.placeholder.com/400x300?text=${encodeURIComponent(product?.name || 'Product')}`
+  ];
 }
 
 /**
